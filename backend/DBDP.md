@@ -55,3 +55,5 @@ CREATE TABLE character_skills (
 );
 ```
 
+已录入信息
+别礼
