@@ -11,13 +11,13 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '123456',
-  database: 'test'
+  database: 'game_user_data'
 });
 
 db.connect();
 
-app.get('/api/users', (req, res) => {
-  db.query('SELECT * FROM tb_user', (err, result) => {
+app.get('/role/essential', (req, res) => {
+  db.query('SELECT * FROM characters', (err, result) => {
     if (err) return res.status(500).send(err);
     res.json(result);
   });
