@@ -57,3 +57,39 @@ CREATE TABLE character_skills (
 
 已录入信息
 别礼
+
+
+
+## 目录结构
+
+```text
+backend
+├─ node_modules
+├─ src
+│  ├─ app.js              // 入口（express 初始化）
+│  ├─ config
+│  │  └─ db.js            // 数据库连接
+│  ├─ routes
+│  │  ├─ character.routes.js
+│  ├─ controllers
+│  │  └─ character.controller.js
+│  ├─ services
+│  │  └─ character.service.js
+│  ├─ models
+│  │  └─ character.model.js
+├─ server.js              // 启动服务
+├─ package.json
+```
+
+```text
+route：定义接口 URL
+
+controller：接收请求 / 返回响应
+
+service：业务逻辑
+
+model：数据库 SQL
+
+config：配置（MySQL）
+```
+
