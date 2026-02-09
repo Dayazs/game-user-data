@@ -1,5 +1,5 @@
-// 数据库连接
-const mysql = require('mysql2/promise');
+// 数据库配置
+import mysql from 'mysql2/promise';
 
 const pool = mysql.createPool({
   host: 'localhost',
@@ -8,4 +8,4 @@ const pool = mysql.createPool({
   database: 'game_user_data'
 });
 
-module.exports = pool;
+export default pool;

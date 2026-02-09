@@ -1,11 +1,10 @@
-// 初始化express
-const express = require('express');
+import express from 'express';
+import characterRoutes from './routes/character.routes.js';
+
 const app = express();
 
 app.use(express.json());
+app.use('/api/characters', characterRoutes);
 
-app.use('/api/characters', require('./routes/character.routes'));
-
-module.exports = app;
-
+export default app;
 

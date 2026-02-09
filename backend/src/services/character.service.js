@@ -1,10 +1,7 @@
-const characterModel = require('../models/character.model');
+import { findAllCharacters } from '../models/character.model.js';
 
 async function getAllCharacters() {
-  return await characterModel.findAllCharacters();
+  return await findAllCharacters();
 }
 
-module.exports = {
-  getAllCharacters
-};
-
+export { getAllCharacters };

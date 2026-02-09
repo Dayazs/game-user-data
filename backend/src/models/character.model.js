@@ -1,10 +1,8 @@
-const db = require('../config/db');
+import db from '../config/db.js';
 
 async function findAllCharacters() {
   const [rows] = await db.query('SELECT * FROM characters');
   return rows;
 }
 
-module.exports = {
-  findAllCharacters
-};
+export { findAllCharacters };
