@@ -117,3 +117,9 @@ config：配置（MySQL）
 
 7. **server.js（启动文件）**
     这个文件负责启动Node.js服务器，通常它会引入`app.js`并调用`app.listen()`启动HTTP服务。`server.js`有时候也负责监听不同的环境设置。
+
+## 指定API接口返回的数据
+
+http://localhost:3000/api/characters	返回所有角色信息
+
+http://localhost:3000/api/characters/skill?id=1	返回指定id角色的技能信息
