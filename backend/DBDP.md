@@ -55,6 +55,21 @@ CREATE TABLE character_skills (
 );
 ```
 
+1.4创建角色定位以及伤害类型表
+
+```sql
+CREATE TABLE character_role_damage (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  character_id INT NOT NULL,
+  role_type TINYINT NOT NULL COMMENT '角色定位：1-6',
+  damage_type TINYINT NOT NULL COMMENT '伤害类型：1-5',
+  CONSTRAINT fk_character_role_damage
+    FOREIGN KEY (character_id) REFERENCES characters(id)
+);
+```
+
+
+
 已录入信息
 别礼
 
@@ -123,3 +138,4 @@ config：配置（MySQL）
 http://localhost:3000/api/characters	返回所有角色信息
 
 http://localhost:3000/api/characters/skill?id=1	返回指定id角色的技能信息
+
