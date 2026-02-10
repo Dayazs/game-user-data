@@ -21,4 +21,23 @@ async function findCharacterSkillById(id) {
   return rows;
 }
 
-export { findAllCharacters, findCharacterSkillById };
+// 根据指定的id查询角色的属性
+async function findCharacterAttributesById(id) {
+  const [rows] = await db.query(`
+    SELECT
+      s.strength,
+      s.agility,
+      s.intelligence,
+      s.willpower,
+      s.hp,
+      s.attack,
+      s.defense
+    FROM characters c
+    LEFT JOIN character_stats s
+    ON c.id = s.character_id
+    WHERE c.id = ?;
+    `, [id]);
+  return rows;
+}
+
+export { findAllCharacters, findCharacterSkillById, findCharacterAttributesById };

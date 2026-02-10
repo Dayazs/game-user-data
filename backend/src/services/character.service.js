@@ -1,4 +1,4 @@
-import { findAllCharacters, findCharacterSkillById } from '../models/character.model.js';
+import { findAllCharacters, findCharacterSkillById, findCharacterAttributesById } from '../models/character.model.js';
 
 // 获取角色基本信息
 async function getAllCharacters() {
@@ -10,4 +10,9 @@ async function getCharacterSkillById(id) {
   return await findCharacterSkillById(id);
 }
 
-export { getAllCharacters, getCharacterSkillById };
+// 获取指定id角色属性
+async function getCharacterAttributesById(id) {
+  return await findCharacterAttributesById(id);
+}
+
+export { getAllCharacters, getCharacterSkillById, getCharacterAttributesById };
