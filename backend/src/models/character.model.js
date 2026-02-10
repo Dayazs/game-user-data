@@ -21,7 +21,7 @@ async function findCharacterSkillById(id) {
   return rows;
 }
 
-// 根据指定的id查询角色的属性
+// 根据指定的id查询角色的能力
 async function findCharacterAttributesById(id) {
   const [rows] = await db.query(`
     SELECT
@@ -40,4 +40,19 @@ async function findCharacterAttributesById(id) {
   return rows;
 }
 
-export { findAllCharacters, findCharacterSkillById, findCharacterAttributesById };
+// 根据指定的id查询角色的阵营和属性
+async function findCharacterRanksById(id) {
+  const [rows] = await db.query(`
+    SELECT
+      s.character_id,
+      s.role_type,
+      s.damage_type
+    FROM characters c
+    LEFT JOIN character_role_damage s
+    ON c.id = s.character_id
+    WHERE c.id = ?;
+    `, [id]);
+  return rows;
+}
+
+export { findAllCharacters, findCharacterSkillById, findCharacterAttributesById, findCharacterRanksById };
