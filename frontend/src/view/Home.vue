@@ -1,67 +1,59 @@
 <template>
-  <div id="home">
-    <!-- 左侧导航栏 -->
-    <div class="sidebar">
-      <ul>
-        <li :class="{ active: selectedTab === '角色' }" @click="selectTab('角色')">角色</li>
-        <li :class="{ active: selectedTab === '武器' }" @click="selectTab('武器')">武器</li>
-        <li :class="{ active: selectedTab === '材料' }" @click="selectTab('材料')">材料</li>
-      </ul>
-    </div>
-
-    <!-- 主内容区 -->
-    <div class="content">
-      <!-- 二级导航栏 -->
-      <div class="secondary-nav">
-        <ul>
-          <li v-for="(item, index) in secondaryNavItems" :key="index">{{ item }}</li>
-        </ul>
+  <!-- 角色列表 -->
+  <div class="roles">
+    <div class="role-card" v-for="role in roles" :key="role.id">
+      <!-- 左上角 定位 + 属性 -->
+      <div class="role-icons" v-if="role.rankInfo">
+        <img :src="getRankImg(role.rankInfo[0].role_type)" />
+        <img :src="getDamageImg(role.rankInfo[0].damage_type)" />
       </div>
 
-      <!-- 角色展示区域 -->
-      <div v-if="selectedTab === '角色'" class="role-display">
-        <h2>所有角色</h2>
-        <!-- 角色列表 -->
-        <div class="roles">
-          <!-- 用 v-for 遍历角色数据进行展示 -->
-          <div class="role" v-for="role in roles" :key="role.id">
-            <p>{{ role.name }}</p>
-          </div>
-        </div>
-      </div>
+      <!-- 角色背景图 -->
+      <img class="role-bg" :src="getCharacterImg(role.spell)" />
 
-      <!-- 其他内容展示区域可以类似 -->
-      <div v-if="selectedTab === '武器'" class="weapon-display">
-        <h2>所有武器</h2>
-        <!-- 这里是武器内容 -->
-      </div>
-      <div v-if="selectedTab === '材料'" class="material-display">
-        <h2>所有材料</h2>
-        <!-- 这里是材料内容 -->
+      <!-- 角色名字 -->
+      <div class="role-name">
+        {{ role.name }}
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      selectedTab: '角色',  // 默认选中 '角色'
-      secondaryNavItems: ['选项1', '选项2', '选项3'], // 二级导航栏的内容
-      roles: [  // 示例角色数据
-        { id: 1, name: '角色1' },
-        { id: 2, name: '角色2' },
-        { id: 3, name: '角色3' },
-      ],
-    };
-  },
-  methods: {
-    selectTab(tab) {
-      this.selectedTab = tab;
-    },
-  },
-};
+<script setup>
+import { ref, onMounted } from 'vue';
+import { getAllcharacters, getCharacterRanks } from '@/api/character';
+
+const roles = ref([]);
+onMounted(async () => {
+  const res = await getAllcharacters();
+  roles.value = res.data;
+
+  // 请求每个角色的属性定位
+  await Promise.all(
+    roles.value.map(async (role) => {
+      const rankRes = await getCharacterRanks(role.id);
+      // console.log(rankRes.data[0].damage_type);
+
+      role.rankInfo = rankRes.data;
+    })
+  )
+})
+
+const getCharacterImg = (spell) => {
+  // console.log(spell);
+
+  return `http://localhost:3000/images/characters/${spell}/${spell}.png`
+}
+
+const getRankImg = (name) => {
+  console.log(name);
+  return `http://localhost:3000/images/characters/general/definition/${name}`
+}
+
+const getDamageImg = (name) => {
+  console.log(name);
+  return `http://localhost:3000/images/characters/general/type/${name}`
+}
 </script>
 
 <style scoped>
