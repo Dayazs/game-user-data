@@ -139,5 +139,9 @@ http://localhost:3000/api/characters	返回所有角色信息
 
 http://localhost:3000/api/characters/skill?id=1	返回指定id角色的技能信息
 
+http://localhost:3000/api/characters/stats?id=1	返回指定id角色的能力信息
+
+http://localhost:3000/api/characters/ranks?id=1	返回指定id角色的阵营和属性信息
+
 http://localhost:3000/images	获取图片资源
 
