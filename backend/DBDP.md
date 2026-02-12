@@ -80,6 +80,10 @@ CREATE TABLE character_role_damage (
 ```text
 backend
 ├─ node_modules
+├─ public
+│  └─ images
+│  │  ├─ characters		 //	角色相关图片资源
+│  │  └─ general		 //	通用图片资源
 ├─ src
 │  ├─ app.js              // 入口（express 初始化）
 │  ├─ config
