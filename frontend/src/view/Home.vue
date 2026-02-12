@@ -47,12 +47,12 @@ const getCharacterImg = (spell) => {
 
 const getRankImg = (name) => {
   console.log(name);
-  return `http://localhost:3000/images/characters/general/definition/${name}`
+  return `http://localhost:3000/images/general/definition/${name}`
 }
 
 const getDamageImg = (name) => {
   console.log(name);
-  return `http://localhost:3000/images/characters/general/type/${name}`
+  return `http://localhost:3000/images/general/type/${name}`
 }
 </script>
 
