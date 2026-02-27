@@ -322,6 +322,10 @@ const filterCharacters = () => {
   top: 0.5rem;
 }
 
+.card-name{
+  font-size: 1.1rem;
+}
+
 /* 职业和属性 */
 .mini-icon {
   width: 2.1rem;
