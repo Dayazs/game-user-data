@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>购物车案例</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  }
+
+  body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* 标题栏 */
+  .header {
+    background: linear-gradient(135deg, #1e88e5 0%, #0d47a1 100%);
+    color: white;
+    padding: 20px 24px;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  /* 购物清单区域 */
+  .cart-container {
+    background: white;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+
+  /* 表头 */
+  .cart-header {
+    display: flex;
+    align-items: center;
+    padding: 18px 24px;
+    background-color: #f8fafc;
+    border-bottom: 1px solid #eaeaea;
+    font-weight: 600;
+    color: #555;
+  }
+
+  .select-all {
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+    white-space: nowrap;
+  }
+
+  .select-all input {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  .header-item {
+    flex: 1;
+    text-align: center;
+  }
+
+  .header-item.product {
+    flex: 3;
+    text-align: left;
+  }
+
+  .header-item.operation {
+    flex: 1.2;
+  }
+
+  /* 商品项目 */
+  .cart-item {
+    display: flex;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+  }
+
+  .cart-item:hover {
+    background-color: #f9fbfd;
+  }
+
+  .item-select {
+    margin-right: 20px;
+  }
+
+  .item-select input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  .item-product {
+    flex: 3;
+    display: flex;
+    align-items: center;
+  }
+
+  .product-image {
+    width: 100px;
+    height: 100px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eee;
+    overflow: hidden;
+  }
+
+  .product-image img {
+    max-width: 80%;
+    max-height: 80%;
+  }
+
+  .product-info {
+    flex: 1;
+  }
+
+  .product-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #222;
+  }
+
+  .product-details {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .product-details div {
+    margin-bottom: 4px;
+  }
+
+  .product-brand {
+    color: #1e88e5;
+    font-weight: 500;
+  }
+
+  .item-quantity {
+    flex: 1;
+    text-align: center;
+  }
+
+  .quantity-control {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .quantity-btn {
+    width: 32px;
+    height: 32px;
+    background-color: #f8f9fa;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #555;
+    transition: background-color 0.2s;
+  }
+
+  .quantity-btn:hover {
+    background-color: #e9ecef;
+  }
+
+  .quantity-input {
+    width: 50px;
+    height: 32px;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    background-color: white;
+  }
+
+  .item-price,
+  .item-total {
+    flex: 1;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .item-price {
+    color: #e53935;
+  }
+
+  .item-total {
+    color: #d32f2f;
+    font-weight: 600;
+  }
+
+  .item-operation {
+    flex: 1.2;
+    text-align: center;
+  }
+
+  .delete-btn {
+    background-color: transparent;
+    border: 1px solid #ffcdd2;
+    color: #e53935;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .delete-btn:hover {
+    background-color: #ffebee;
+    border-color: #e53935;
+  }
+
+  /* 底部栏 */
+  .cart-footer {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8fafc;
+    border-top: 1px solid #eaeaea;
+  }
+
+  .footer-left {
+    display: flex;
+    gap: 20px;
+  }
+
+  .delete-selected {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    color: #666;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .delete-selected:hover {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+
+  .continue-shopping {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+
+  .continue-shopping:hover {
+    background-color: #e8e8e8;
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .total-info {
+    text-align: right;
+  }
+
+  .total-count {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .total-price {
+    font-size: 24px;
+    font-weight: 700;
+    color: #d32f2f;
+  }
+
+  .currency {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .checkout-btn {
+    background: linear-gradient(to right, #ff9800, #f57c00);
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+    transition: all 0.3s;
+  }
+
+  .checkout-btn:hover {
+    background: linear-gradient(to right, #f57c00, #ef6c00);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
+  }
+
+  /* 响应式设计 */
+  @media (max-width: 992px) {
+    .cart-header {
+      display: none;
+    }
+
+    .cart-item {
+      flex-wrap: wrap;
+      position: relative;
+      padding-bottom: 40px;
+    }
+
+    .item-select {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+    }
+
+    .item-product {
+      flex: 1 0 100%;
+      margin-bottom: 20px;
+      padding-left: 40px;
+    }
+
+    .item-quantity,
+    .item-price,
+    .item-total {
+      flex: 1;
+      text-align: left;
+      margin-bottom: 10px;
+      padding-left: 20px;
+    }
+
+    .item-operation {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+    }
+
+    .footer-left {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cart-footer {
+      flex-direction: column;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .footer-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
+  .product-img {
+    width: 100px;
+    height: 100px;
+    background-color: #e0e0e0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9e9e9e;
+    font-size: 24px;
+  }
+
+  .empty {
+    height: 300px;
+    width: 100%;
+    font-size: 50px;
+    text-align: center;
+    line-height: 300px;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <!-- 标题栏 -->
+    <div class="header">
+      <h1>购物清单</h1>
+    </div>
+
+    <!-- 购物清单内容 -->
+    <div class="cart-container">
+      <!-- 表头 -->
+      <div class="cart-header">
+        <div class="select-all">
+          <input type="checkbox" id="select-all" />
+          <label for="select-all">全选</label>
+        </div>
+        <div class="header-item product">商品</div>
+        <div class="header-item">数量</div>
+        <div class="header-item">单价(元)</div>
+        <div class="header-item">金额(元)</div>
+        <div class="header-item operation">操作</div>
+      </div>
+
+      <!-- 商品列表 -->
+      <div class="cart-items">
+        <!-- 商品1 -->
+        <!-- <div class="cart-item">
+          <div class="item-select">
+            <input type="checkbox" class="item-checkbox" checked />
+          </div>
+          <div class="item-product">
+            <div class="product-image">
+              <img src="./images/good1.jpg" alt="" />
+            </div>
+            <div class="product-info">
+              <div class="product-name">羽绒服</div>
+            </div>
+          </div>
+          <div class="item-quantity">
+            <div class="quantity-control">
+              <button class="quantity-btn minus">-</button>
+              <input type="text" class="quantity-input" value="3" readonly />
+              <button class="quantity-btn plus">+</button>
+            </div>
+          </div>
+          <div class="item-price">￥800.00</div>
+          <div class="item-total">￥2400.00</div>
+          <div class="item-operation">
+            <button class="delete-btn">删除</button>
+          </div>
+        </div> -->
+
+        <!-- 商品2 -->
+        <!-- <div class="cart-item">
+            <div class="item-select">
+              <input type="checkbox" class="item-checkbox" checked />
+            </div>
+            <div class="item-product">
+              <div class="product-image">
+                <img src="./images/good2.jpg" alt="" />
+              </div>
+              <div class="product-info">
+                <div class="product-name">毛衣</div>
+              </div>
+            </div>
+            <div class="item-quantity">
+              <div class="quantity-control">
+                <button class="quantity-btn minus">-</button>
+                <input type="text" class="quantity-input" value="1" readonly />
+                <button class="quantity-btn plus">+</button>
+              </div>
+            </div>
+            <div class="item-price">￥800.00</div>
+            <div class="item-total">￥800.00</div>
+            <div class="item-operation">
+              <button class="delete-btn">删除</button>
+            </div>
+          </div> -->
+      </div>
+
+      <!-- 底部栏 -->
+      <div class="cart-footer">
+        <div class="footer-left">
+          <button class="delete-selected">删除所选商品</button>
+          <a href="#" class="continue-shopping">继续购物</a>
+        </div>
+        <div class="footer-right">
+          <div class="total-info">
+            <div class="total-count">0件商品总计(不含运费)：</div>
+            <div class="total-price">
+              <span class="currency">￥</span>0
+            </div>
+          </div>
+          <button class="checkout-btn">去结算</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <script>
+    // 模拟购物车数据。用数据渲染页面
+    const goodsList = [
+      {
+        id: 1,
+        checked: false,
+        img: './images/good1.jpg',
+        goodName: '羽绒服',
+        number: 3,
+        price: 800,
+      },
+      {
+        id: 2,
+        checked: false,
+        img: './images/good2.jpg',
+        goodName: '毛衣',
+        number: 1,
+        price: 800,
+      },
+    ]
+
+
+    let cartItems = document.querySelector('.cart-items');
+    // console.log(cartItems);
+
+    //  先写入信息
+    goodsList.forEach((item, index) => {
+      let str = `
+        <div class="cart-item">
+            <div class="item-select">
+              <input type="checkbox" class="item-checkbox" />
+            </div>
+            <div class="item-product">
+              <div class="product-image">
+                <img src="${item.img}" alt="" />
+              </div>
+              <div class="product-info">
+                <div class="product-name"></div>
+              </div>
+            </div>
+            <div class="item-quantity">
+              <div class="quantity-control">
+                <button class="quantity-btn minus">-</button>
+                <input type="text" class="quantity-input" value="${item.number}" readonly />
+                <button class="quantity-btn plus">+</button>
+              </div>
+            </div>
+            <div class="item-price">￥${item.price}</div>
+            <div class="item-total">￥${item.number * item.price}</div>
+            <div class="item-operation">
+              <button class="delete-btn">删除</button>
+            </div>
+          </div>
+     `
+      cartItems.innerHTML += str;
+    })
+
+
+
+    // 左侧全选框
+    let selectAll = document.getElementById('select-all');
+    // 商品左侧选择框
+    let itemCheckboxs = document.querySelectorAll('.item-checkbox');
+    // 商品数量框
+    let quantityInput = document.querySelectorAll('.quantity-input');
+    // 减少按钮
+    let minus = document.querySelectorAll('.minus');
+    // 增加按钮
+    let plus = document.querySelectorAll('.plus');
+    // 单件商品总金额
+    let itemTotal = document.querySelectorAll('.item-total');
+    // 最后结算金额
+    let totalPrice = document.querySelector('.total-price');
+    // 删除所选商品
+    let deleteSelected = document.querySelector('.delete-selected');
+    // 商品盒子
+    let cartItemss = document.querySelectorAll('.cart-item');
+    // 商品总金额
+    let allPrice = 0;
+    goodsList.forEach((item) => {
+      allPrice += item.number * item.price;
+    })
+    // console.log(allPrice);
+
+
+    // 商品选择按钮逻辑
+    goodsList.forEach(((item, index) => {
+
+      // 全选全不选逻辑
+      itemCheckboxs[index].addEventListener('change', () => {
+        goodsList[index].checked = itemCheckboxs[index].checked;
+        let temp = true;
+        for (let i = 0; i < goodsList.length; i++) {
+          if (!goodsList[i].checked) {
+            temp = false;
+            break;
+          }
+
+        }
+        selectAll.checked = temp;
+      })
+    }))
+
+
+    // 初始化底部总金额
+    selectAll.checked ? totalPrice.innerText = totalPriceF(goodsList) : totalPrice.innerText = '￥' + 0;
+
+
+    // 全选按钮逻辑
+    selectAll.addEventListener('click', () => {
+      goodsList.forEach((item, index) => {
+        item.checked = selectAll.checked;
+        itemCheckboxs[index].checked = item.checked;
+      })
+      // 点击按钮更新最后金额
+      selectAll.checked ? totalPrice.innerText = totalPriceF(goodsList) : totalPrice.innerText = 0;
+
+    })
+
+
+    // 商品数量加减逻辑
+    goodsList.forEach((item, index) => {
+      // 增加逻辑
+      plus[index].addEventListener('click', () => {
+        quantityInput[index].value = ++goodsList[index].number;
+        itemTotal[index].innerText = '￥' + total(goodsList[index].number, goodsList[index].price);
+        selectAll.checked ? totalPrice.innerText = totalPriceF(goodsList) : '';
+      })
+      // 减少逻辑
+      minus[index].addEventListener('click', () => {
+        if (quantityInput[index].value > 0) {
+          quantityInput[index].value = --goodsList[index].number;
+          itemTotal[index].innerText = '￥' + total(goodsList[index].number, goodsList[index].price);
+          selectAll.checked ? totalPrice.innerText = totalPriceF(goodsList) : '';
+        }
+      })
+    })
+
+
+    // 单间商品总金额计算逻辑
+    function total(count, price) {
+      return count * price;
+    }
+
+
+    // 最后结算金额逻辑
+    function totalPriceF(list) {
+      let totalPrice = 0;
+      list.forEach((item, index) => {
+        totalPrice += item.number * item.price;
+      })
+      return '￥' + totalPrice;
+    }
+
+
+    点击删除所选商品逻辑
+    标记
+    deleteSelected.addEventListener('click', () => {
+      for (let i = goodsList.length - 1; i >= 0; i--) {
+        if (itemCheckboxs[i].checked) {
+          delect(cartItemss, i);
+          goodsList.splice(i, 1);
+        }
+        itemCheckboxs = document.querySelectorAll('.item-checkbox');
+        // 更新最后总价
+        totalPrice.innerText = totalPriceF(goodsList);
+
+        if (goodsList.length > 0) {
+          // 更新全选框状态
+          let temp = true;
+          for (let i = 0; i < goodsList.length; i++) {
+            if (!goodsList[i].checked) {
+              temp = false;
+              break;
+            }
+          }
+          selectAll.checked = temp;
+        }
+      }
+    })
+
+
+    // 删除商品
+    function delect(arr, index) {
+      // console.log(arr[index]);
+      arr[index].remove();
+    }
+  </script> -->
+</body>
+
+<script>
+  // 商品数据
+  let commodity = [
+    {
+      id: 1,
+      name: '商品一',
+      price: 200,
+      count: 1,
+      isOn: false
+    },
+    {
+      id: 2,
+      name: '商品二',
+      price: 400,
+      count: 2,
+      isOn: false
+    },
+    {
+      id: 3,
+      name: '商品三',
+      price: 600,
+      count: 1,
+      isOn: false
+    },
+  ]
+
+  // 拿到DOM元素
+  const cartItems = document.querySelector('.cart-items')
+  const selectAll = document.getElementById('select-all')
+  const totalCount = document.querySelector('.total-count')
+  const totalPrice = document.querySelector('.total-price')
+
+
+  // 初始化商品列表
+  function lodeCommodityItems() {
+    cartItems.innerHTML = ''
+    // 如果没有商品则渲染空空如也
+    if (commodity.length !== 0) {
+      commodity.forEach((item, index) => {
+        let str = `
+          <div class="cart-item" item-id="${item.id}">
+            <div class="item-select">
+              <input type="checkbox" class="item-checkbox" ${item.isOn ? 'checked' : ''} />
+            </div>
+            <div class="item-product">
+              <div class="product-image">
+
+              </div>
+              <div class="product-info">
+                <div class="product-name">${item.name}</div>
+              </div>
+            </div>
+            <div class="item-quantity">
+              <div class="quantity-control">
+                <button class="quantity-btn minus">-</button>
+                <input type="text" class="quantity-input" value="${item.count}" readonly />
+                <button class="quantity-btn plus">+</button>
+              </div>
+            </div>
+            <div class="item-price">￥${item.price}</div>
+            <div class="item-total">￥${item.price * item.count}</div>
+            <div class="item-operation">
+            <button class="delete-btn">删除</button>
+          </div>
+        </div>
+        `
+        // 添加到页面上
+        cartItems.innerHTML += str
+
+
+        bindEvents()
+        upBottomData()
+      })
+    }
+  }
+
+  // 在页面初始化时绑定所有事件
+  function bindEvents() {
+    // 每个商品所选框
+    let itemCheckboxs = document.querySelectorAll('.item-checkbox')
+    // 增加按钮
+    let plusBtns = document.querySelectorAll('.plus')
+    // 减少按钮
+    let minusBtns = document.querySelectorAll('.minus')
+    // 删除按钮
+    let deleteBtns = document.querySelectorAll('.delete-btn')
+
+    // let delectBtn = document.querySelector('.')
+    // 商品选择框事件
+    itemCheckboxs.forEach((item, index) => {
+      item.addEventListener('change', () => {
+        commodity[index].isOn = item.checked
+        // 更新全选框状态
+        updataSelectAllState()
+        // 更新底部信息
+        upBottomData()
+      })
+    })
+    // 增加数量
+    plusBtns.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        commodity[index].count++
+        // 更新单个商品总价
+        updateItemTotal(index)
+        // 更新底部数据
+        upBottomData()
+      })
+    })
+    // 减少数量
+    minusBtns.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        if (commodity[index].count > 0) {
+          commodity[index].count--
+          updateItemTotal(index)
+          upBottomData()
+        }
+      })
+    })
+    // 删除单个商品
+    deleteBtns.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        deleteItem(index)
+      })
+    })
+  }
+
+
+
+  // 更新底部信息
+  function upBottomData() {
+    // 选中的商品件数
+    let selectCount = 0
+    // 商品总价
+    let selectTotal = 0
+
+    commodity.forEach(item => {
+      if (item.isOn) {
+        selectCount += item.count
+        selectTotal += item.count * item.price
+      }
+    })
+    // 将计算后的值同步到页面中
+    totalCount.innerText = `${selectCount}件商品总计(不含运费)：`
+    totalPrice.innerHTML = `<span class="currency">￥</span>${selectTotal}`
+  }
+
+  // 更新全选状态
+  function updataSelectAllState() {
+    selectAll.checked = (commodity.length > 0 && commodity.every(item => item.isOn))
+  }
+
+  // 更新单个商品总价
+  function updateItemTotal(index) {
+    const item = commodity[index]
+    // 拿到指定的商品
+    const cardItem = document.querySelectorAll('.cart-item')[index]
+    // 拿到显示单个商品数量的DOM
+    const cardItemInput = cardItem.querySelector('.quantity-input')
+    // 拿到显示单个商品总价的DOM
+    const cardItemTotal = cardItem.querySelector('.item-total')
+
+    // 更新数据
+    cardItemInput.value = item.count
+    cardItemTotal.innerText = `￥${item.count * item.price}`
+  }
+
+  // 全选全不选
+  selectAll.addEventListener('change', () => {
+    commodity.forEach(item => {
+      item.isOn = selectAll.checked
+    })
+    lodeCommodityItems()
+  })
+
+  // 删除单个商品
+  function deleteItem(index) {
+    commodity.splice(index, 1)
+    // 更新页面
+    lodeCommodityItems()
+  }
+
+  // 删除所选商品
+  function deleteSelectItems() {
+    for (let i = commodity.length - 1; i >= 0; i--) {
+      if (commodity[i].isOn) {
+        commodity.splice(i, 1)
+      }
+    }
+    // 更新页面
+    lodeCommodityItems()
+  }
+  // 为删除所选按钮添加事件
+  document.querySelector('.delete-selected').addEventListener('click', deleteSelectItems)
+
+  lodeCommodityItems()
+</script>
+
+</html>
