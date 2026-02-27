@@ -9,7 +9,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/character/:id',
+    path: '/character/characterDetail',
     name: 'CharacterDetail',
     component: CharacterDetail,
     props: true
