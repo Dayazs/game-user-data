@@ -6,6 +6,14 @@ async function findAllCharacters() {
   return rows;
 }
 
+// 查询指定角色信息
+async function findCharacterDetailById(id) {
+  const [rows] = await db.query(`
+    SELECT * FROM characters WHERE characters.id = ?;
+    `, [id]);
+  return rows;
+}
+
 // 根据指定的id查询角色的技能信息
 async function findCharacterSkillById(id) {
   const [rows] = await db.query(`
@@ -25,13 +33,20 @@ async function findCharacterSkillById(id) {
 async function findCharacterAttributesById(id) {
   const [rows] = await db.query(`
     SELECT
+      c.id,
+      c.name,
+      c.faction,
+      c.race,
+      c.star_level,
       s.strength,
       s.agility,
       s.intelligence,
       s.willpower,
       s.hp,
       s.attack,
-      s.defense
+      s.defense,
+      s.main_ability,
+      secondary_ability
     FROM characters c
     LEFT JOIN character_stats s
     ON c.id = s.character_id
@@ -55,4 +70,18 @@ async function findCharacterRanksById(id) {
   return rows;
 }
 
-export { findAllCharacters, findCharacterSkillById, findCharacterAttributesById, findCharacterRanksById };
+// 查询指定角色id的台词和介绍
+async function findCharacterDialoguesById(id) {
+  const [rows] = await db.query(`
+    SELECT 
+      d.character_id,
+      d.catchphrase,
+      d.introduction
+    FROM characters c
+    LEFT JOIN character_dialogues d
+    ON c.id = d.character_id
+    WHERE c.id = ?;
+    `, [id]);
+    return rows;
+}
+export { findAllCharacters, findCharacterSkillById, findCharacterAttributesById, findCharacterRanksById, findCharacterDetailById,findCharacterDialoguesById };
