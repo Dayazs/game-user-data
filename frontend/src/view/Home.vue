@@ -125,8 +125,7 @@ onMounted(async () => {
   // 获取所有角色的基本信息
   const res = await axios.get('api/characters')
   characters.value = res.data
-  allCharacters = res.data
-  // console.log(res.data);
+  allCharacters = res.data.sort((a,b) => b.star_level - a.star_level)
 })
 
 

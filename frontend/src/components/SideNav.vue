@@ -3,7 +3,7 @@
   <div class="left-nav">
     <!-- 返回首页 -->
     <div class="logo">
-      <img src="/public/logo.png" alt="logo">
+      <img src="/src/logo.png" alt="logo">
     </div>
     <!-- 主导航 -->
     <div class="nav">
