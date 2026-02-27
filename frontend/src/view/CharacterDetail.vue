@@ -377,6 +377,7 @@ const skillBgColor = computed(() => {
   justify-content: center;
   /* 改变主轴防线于文本堆叠方向一致 */
   flex-direction: column;
+  margin-left: -0.8rem;
 }
 
 .skill-name {
@@ -385,6 +386,7 @@ const skillBgColor = computed(() => {
   font-weight: 700;
   /* 防止文字溢出 */
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .attr-list {
