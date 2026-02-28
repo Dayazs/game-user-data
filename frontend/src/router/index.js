@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router"
-import Home from "@/view/Home.vue"
-import CharacterDetail from "@/view/CharacterDetail.vue"
+import TheEndland from "@/view/TheEndland.vue"
+import TEcharacterDetail from "@/view/TEcharacterDetail.vue"
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/the_endland',
+    name: 'the_endland_home',
+    component: TheEndland
   },
   {
-    path: '/character/characterDetail',
-    name: 'CharacterDetail',
-    component: CharacterDetail,
-    props: true
+    path: '/the_endland/te_character_detail',
+    name: 'TEcharacterDetail',
+    component: TEcharacterDetail,
+    // props: true
   }
 ]
 
