@@ -20,7 +20,8 @@ async function findCharacterSkillById(id) {
     SELECT
       s.skill_name,
       s.skill_type,
-      s.description
+      s.description,
+      s.damage_type
     FROM characters c
     LEFT JOIN character_skills s
     ON c.id = s.character_id
