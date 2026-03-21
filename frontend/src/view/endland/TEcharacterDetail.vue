@@ -4,172 +4,176 @@
     <SideNav />
     <!-- 右侧内容区 -->
     <div class="right-content">
-      <!-- 当前位置 -->
-      <div class="breadcrumb" id="breadcrumb">
-        <a href="/" class="crumb">首页</a>
-        <span class="slash">/</span>
-        <a href="/the_endland" class="crumb">角色列表</a>
-        <span class="slash">/</span>
-        <span class="crumb">{{ thisCharacter.name }}</span>
-      </div>
-      <!-- 角色介绍 -->
-      <div class="panel" id="introPanel">
-        <div class="intro-left">
-          <!-- 角色定位，属性，名称，星级 -->
-          <div class="intro-rowl">
-            <!-- 定位 -->
-            <div class="big-icon" v-if="thisCharacter"
-              :style="{ backgroundImage: `url(/images/general/definition/${thisCharacter.role_type})` }"></div>
+      <div class="main-content">
+        <!-- 当前位置 -->
+        <div class="breadcrumb" id="breadcrumb">
+          <a href="/" class="crumb">首页</a>
+          <span class="slash">/</span>
+          <a href="/the_endland" class="crumb">角色列表</a>
+          <span class="slash">/</span>
+          <span class="crumb">{{ thisCharacter.name }}</span>
+        </div>
+        <!-- 角色介绍 -->
+        <div class="panel" id="introPanel">
+          <div class="intro-left">
+            <!-- 角色定位，属性，名称，星级 -->
+            <div class="intro-rowl">
+              <!-- 定位 -->
+              <div class="big-icon" v-if="thisCharacter"
+                :style="{ backgroundImage: `url(/images/general/definition/${thisCharacter.role_type})` }"></div>
+              <!-- 属性 -->
+              <div class="big-icon" v-if="thisCharacter"
+                :style="{ backgroundImage: `url(/images/general/type/${thisCharacter.damage_type})` }">
+              </div>
+              <!-- 角色名称 -->
+              <div class="name-box">
+                <div class="name-box-bracket-left">[</div>
+                <div class="name-box-text">{{ thisCharacter.name }}</div>
+                <div class="name-box-bracket-right">]</div>
+              </div>
+              <!-- 星级 -->
+              <div class="stars">
+                <!-- 使用v-for来生成对应的星级 -->
+                <div class="star" v-for="star in thisCharacter.star_level"></div>
+              </div>
+            </div>
+            <!-- 分割线 -->
+            <div class="gard-bar">
+              <!-- 粉 -->
+              <div class="p1"></div>
+              <!-- 黄 -->
+              <div class="p2"></div>
+              <!-- 绿 -->
+              <div class="p3"></div>
+            </div>
+            <!-- 阵营，种族 -->
+            <div class="intro-row2">
+              <div class="chip-k">阵营</div>
+              <div class="chip-v" id="faction">{{ thisCharacter.faction }}</div>
+              <div class="chip-k">种族</div>
+              <div class="chip-v" id="race">{{ thisCharacter.race }}</div>
+            </div>
+            <!-- 小白话 -->
+            <div class="intro-row3">{{ thisCharacterDialogues.catchphrase }}</div>
+            <!-- 角色描述 -->
+            <div class="intro-row4">{{ thisCharacterDialogues.introduction }}</div>
+          </div>
+          <!-- 角色图片 -->
+          <div class="intro-img-container">
+            <img v-if="thisCharacter.spell"
+              :src="`/images/characters/${thisCharacter.spell}/${thisCharacter.spell}.png`" alt="" class="intro-img">
+          </div>
+        </div>
+        <!-- 属性技能 -->
+        <div class="panel2">
+          <div class="two-col">
             <!-- 属性 -->
-            <div class="big-icon" v-if="thisCharacter"
-              :style="{ backgroundImage: `url(/images/general/type/${thisCharacter.damage_type})` }">
-            </div>
-            <!-- 角色名称 -->
-            <div class="name-box">
-              <div class="name-box-bracket-left">[</div>
-              <div class="name-box-text">{{ thisCharacter.name }}</div>
-              <div class="name-box-bracket-right">]</div>
-            </div>
-            <!-- 星级 -->
-            <div class="stars">
-              <!-- 使用v-for来生成对应的星级 -->
-              <div class="star" v-for="star in thisCharacter.star_level"></div>
-            </div>
-          </div>
-          <!-- 分割线 -->
-          <div class="gard-bar">
-            <!-- 粉 -->
-            <div class="p1"></div>
-            <!-- 黄 -->
-            <div class="p2"></div>
-            <!-- 绿 -->
-            <div class="p3"></div>
-          </div>
-          <!-- 阵营，种族 -->
-          <div class="intro-row2">
-            <div class="chip-k">阵营</div>
-            <div class="chip-v" id="faction">{{ thisCharacter.faction }}</div>
-            <div class="chip-k">种族</div>
-            <div class="chip-v" id="race">{{ thisCharacter.race }}</div>
-          </div>
-          <!-- 小白话 -->
-          <div class="intro-row3">{{ thisCharacterDialogues.catchphrase }}</div>
-          <!-- 角色描述 -->
-          <div class="intro-row4">{{ thisCharacterDialogues.introduction }}</div>
-        </div>
-        <!-- 角色图片 -->
-        <div class="intro-img-container">
-          <img v-if="thisCharacter.spell" :src="`/images/characters/${thisCharacter.spell}/${thisCharacter.spell}.png`"
-            alt="" class="intro-img">
-        </div>
-      </div>
-      <!-- 属性技能 -->
-      <div class="panel2">
-        <div class="two-col">
-          <!-- 属性 -->
-          <div class="attr">
-            <!-- 属性标题 -->
-            <div class="bar-title">能力值</div>
-            <!-- 各个属性 -->
-            <div class="attr-list">
-              <!-- 力量 -->
-              <div class="tanlent-item">
-                <!-- 属性图片 -->
-                <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/strength.png)` }"
-                  :class="{
-                    'main-ability': thisCharacterStats.main_ability === 'strength.png',
-                    'secondary_ability': thisCharacterStats.secondary_ability === 'strength.png'
-                  }">
+            <div class="attr">
+              <!-- 属性标题 -->
+              <div class="bar-title">能力值</div>
+              <!-- 各个属性 -->
+              <div class="attr-list">
+                <!-- 力量 -->
+                <div class="tanlent-item">
+                  <!-- 属性图片 -->
+                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/strength.png)` }"
+                    :class="{
+                      'main-ability': thisCharacterStats.main_ability === 'strength.png',
+                      'secondary_ability': thisCharacterStats.secondary_ability === 'strength.png'
+                    }">
+                  </div>
+                  <div class="tanlent-value">{{ thisCharacterStats.strength }}</div>
+                  <div class="tanlent-name">力量</div>
                 </div>
-                <div class="tanlent-value">{{ thisCharacterStats.strength }}</div>
-                <div class="tanlent-name">力量</div>
-              </div>
 
-              <!-- 敏捷 -->
-              <div class="tanlent-item">
-                <!-- 属性图片 -->
-                <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/agility.png)` }"
-                  :class="{
-                    'main-ability': thisCharacterStats.main_ability === 'agility.png',
-                    'secondary_ability': thisCharacterStats.secondary_ability === 'agility.png'
-                  }">
+                <!-- 敏捷 -->
+                <div class="tanlent-item">
+                  <!-- 属性图片 -->
+                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/agility.png)` }"
+                    :class="{
+                      'main-ability': thisCharacterStats.main_ability === 'agility.png',
+                      'secondary_ability': thisCharacterStats.secondary_ability === 'agility.png'
+                    }">
+                  </div>
+                  <div class="tanlent-value">{{ thisCharacterStats.agility }}</div>
+                  <div class="tanlent-name">敏捷</div>
                 </div>
-                <div class="tanlent-value">{{ thisCharacterStats.agility }}</div>
-                <div class="tanlent-name">敏捷</div>
-              </div>
 
-              <!-- 智识 -->
-              <div class="tanlent-item">
-                <!-- 属性图片 -->
-                <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/intelligence.png)` }"
-                  :class="{
-                    'main-ability': thisCharacterStats.main_ability === 'intelligence.png',
-                    'secondary_ability': thisCharacterStats.secondary_ability === 'intelligence.png'
-                  }">
+                <!-- 智识 -->
+                <div class="tanlent-item">
+                  <!-- 属性图片 -->
+                  <div class="talent-icon"
+                    :style="{ backgroundImage: `url(/images/general/property/intelligence.png)` }" :class="{
+                      'main-ability': thisCharacterStats.main_ability === 'intelligence.png',
+                      'secondary_ability': thisCharacterStats.secondary_ability === 'intelligence.png'
+                    }">
+                  </div>
+                  <div class="tanlent-value">{{ thisCharacterStats.intelligence }}</div>
+                  <div class="tanlent-name">智识</div>
                 </div>
-                <div class="tanlent-value">{{ thisCharacterStats.intelligence }}</div>
-                <div class="tanlent-name">智识</div>
-              </div>
 
-              <!-- 意志 -->
-              <div class="tanlent-item">
-                <!-- 属性图片 -->
-                <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/will.png)` }" :class="{
-                  'main-ability': thisCharacterStats.main_ability === 'will.png',
-                  'secondary_ability': thisCharacterStats.secondary_ability === 'will.png'
-                }">
+                <!-- 意志 -->
+                <div class="tanlent-item">
+                  <!-- 属性图片 -->
+                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/will.png)` }"
+                    :class="{
+                      'main-ability': thisCharacterStats.main_ability === 'will.png',
+                      'secondary_ability': thisCharacterStats.secondary_ability === 'will.png'
+                    }">
+                  </div>
+                  <div class="tanlent-value">{{ thisCharacterStats.willpower }}</div>
+                  <div class="tanlent-name">意志</div>
                 </div>
-                <div class="tanlent-value">{{ thisCharacterStats.willpower }}</div>
-                <div class="tanlent-name">意志</div>
-              </div>
 
-              <!-- 生命 -->
-              <div class="tanlent-item">
-                <!-- 属性图片 -->
-                <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/hp.png)` }">
+                <!-- 生命 -->
+                <div class="tanlent-item">
+                  <!-- 属性图片 -->
+                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/hp.png)` }">
+                  </div>
+                  <div class="tanlent-value">{{ thisCharacterStats.hp }}</div>
+                  <div class="tanlent-name">生命值</div>
                 </div>
-                <div class="tanlent-value">{{ thisCharacterStats.hp }}</div>
-                <div class="tanlent-name">生命值</div>
-              </div>
 
-              <!-- 攻击力 -->
-              <div class="tanlent-item">
-                <!-- 属性图片 -->
-                <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/attack.png)` }">
+                <!-- 攻击力 -->
+                <div class="tanlent-item">
+                  <!-- 属性图片 -->
+                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/attack.png)` }">
+                  </div>
+                  <div class="tanlent-value">{{ thisCharacterStats.attack }}</div>
+                  <div class="tanlent-name">攻击力</div>
                 </div>
-                <div class="tanlent-value">{{ thisCharacterStats.attack }}</div>
-                <div class="tanlent-name">攻击力</div>
-              </div>
 
-              <!-- 防御力 -->
-              <div class="tanlent-item">
-                <!-- 属性图片 -->
-                <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/defense.png)` }">
+                <!-- 防御力 -->
+                <div class="tanlent-item">
+                  <!-- 属性图片 -->
+                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/defense.png)` }">
+                  </div>
+                  <div class="tanlent-value">{{ thisCharacterStats.defense }}</div>
+                  <div class="tanlent-name">防御力</div>
                 </div>
-                <div class="tanlent-value">{{ thisCharacterStats.defense }}</div>
-                <div class="tanlent-name">防御力</div>
               </div>
             </div>
-          </div>
-          <!-- 技能 -->
-          <div class="skills">
-            <!-- 技能标题 -->
-            <div class="bar-title">技能</div>
-            <div class="skills-grid">
-              <div class="skill-item" v-for="(skill, index) in thisCharacterSkills" :key="index">
-                <div class="skill-icon" :style="{ backgroundColor: getSkillBgColor(skill.damage_type) }">
-                  <img v-if="thisCharacter.spell"
-                    :src="`/images/characters/${thisCharacter.spell}/skills/${thisCharacter.spell}_skill_${index + 1}.png`"
-                    alt="">
-                </div>
-                <div class="skill-meta">
-                  <div class="skill-name">{{ skill.skill_name }}</div>
+            <!-- 技能 -->
+            <div class="skills">
+              <!-- 技能标题 -->
+              <div class="bar-title">技能</div>
+              <div class="skills-grid">
+                <div class="skill-item" v-for="(skill, index) in thisCharacterSkills" :key="index">
+                  <div class="skill-icon" :style="{ backgroundColor: getSkillBgColor(skill.damage_type) }">
+                    <img v-if="thisCharacter.spell"
+                      :src="`/images/characters/${thisCharacter.spell}/skills/${thisCharacter.spell}_skill_${index + 1}.png`"
+                      alt="">
+                  </div>
+                  <div class="skill-meta">
+                    <div class="skill-name">{{ skill.skill_name }}</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <!-- 评论模块 -->
       <div class="commentWarpper">
         <div class="comment-card">
@@ -206,7 +210,7 @@ import { useRoute } from 'vue-router'
 // 接收传递过来的角色id
 const route = useRoute()
 const characterId = route.query.id
-console.log(characterId);
+console.log(characterId)
 
 
 // 角色基本信息
@@ -265,10 +269,12 @@ const getSkillBgColor = (damageType) => {
 }
 
 .right-content {
+  display: flex;
   margin-left: 7rem;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
+
 }
 
 /* 当前位置 */
@@ -570,20 +576,23 @@ const getSkillBgColor = (damageType) => {
   height: 100%;
 }
 
+.main-content {
+  margin-right: 2rem;
+}
 
 /* 评论区模块 */
 .commentWarpper {
-  position: fixed;
-  top: 5.5rem;
-  bottom: 1rem;
-  right: 1.2rem;
-  width: 27.6rem;
+  margin-top: 5.5rem;
+  width: 24.6rem;
+  min-width: 24.6rem;
+  height: 53rem;
+
   background-color: #fff;
   box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.3);
   border-radius: 0.4rem;
   box-sizing: border-box;
   padding: 1rem 0.8rem;
-  z-index: 1000;
+  /*z-index: 1000; */
 }
 
 .comment-card {
