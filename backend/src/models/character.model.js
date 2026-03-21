@@ -1,4 +1,4 @@
-import db from '../config/db.js';
+import db from '../utils/db.js';
 
 // 查询所有角色信息
 async function findAllCharacters() {
@@ -83,6 +83,6 @@ async function findCharacterDialoguesById(id) {
     ON c.id = d.character_id
     WHERE c.id = ?;
     `, [id]);
-    return rows;
+  return rows;
 }
-export { findAllCharacters, findCharacterSkillById, findCharacterAttributesById, findCharacterRanksById, findCharacterDetailById,findCharacterDialoguesById };
+export { findAllCharacters, findCharacterSkillById, findCharacterAttributesById, findCharacterRanksById, findCharacterDetailById, findCharacterDialoguesById };
