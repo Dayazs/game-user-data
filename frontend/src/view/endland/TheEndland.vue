@@ -58,22 +58,32 @@
               'icon-active': selectedFilters.role_type === 'profession_5.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_5.png'
             }" style="background-image: url('images/general/definition/profession_5.png');"></div>
+
+
             <div class="icon-item" title="突击" @click="toggleCharacterFilter('role_type', 'profession_4.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_4.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_4.png'
             }" style="background-image: url('images/general/definition/profession_4.png');"></div>
+
+
             <div class="icon-item" title="先锋" @click="toggleCharacterFilter('role_type', 'profession_3.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_3.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_3.png'
             }" style="background-image: url('images/general/definition/profession_3.png');"></div>
+
+
             <div class="icon-item" title="近卫" @click="toggleCharacterFilter('role_type', 'profession_1.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_1.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_1.png'
             }" style="background-image: url('images/general/definition/profession_1.png');"></div>
+
+
             <div class="icon-item" title="辅助" @click="toggleCharacterFilter('role_type', 'profession_6.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_6.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_6.png'
             }" style="background-image: url('images/general/definition/profession_6.png');"></div>
+
+            
             <div class="icon-item" title="重装" @click="toggleCharacterFilter('role_type', 'profession_2.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_2.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_2.png'
@@ -136,8 +146,11 @@ onMounted(async () => {
 // 筛选功能
 // 根据一个或多个条件筛选
 const selectedFilters = {
+  // 星级
   star_level: null,
+  // 定位
   damage_type: null,
+  // 属性
   role_type: null
 }   // 用于存储筛选的条件
 const toggleCharacterFilter = (filterType, value) => {

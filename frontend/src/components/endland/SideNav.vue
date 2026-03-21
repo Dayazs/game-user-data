@@ -17,7 +17,7 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 // 左侧导航栏的样式切换
 const activeNav = ref('角色')
 
