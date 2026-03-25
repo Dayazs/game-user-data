@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { register, login } from '../services/user.service.js'
+import secretData from '../config/jwt.json' assert { type: 'json' }
 
-const SECRET = '$cccAneDayazs'
+const SECRET = secretData.SECRET
 
 // 注册
 async function userRegister(req, res) {
