@@ -12,12 +12,17 @@
       <div class="nav-item" :class="{ 'nav-item-active': activeNav === '武器' }" @click="activeNav = '武器'">武器</div>
       <div class="nav-item" :class="{ 'nav-item-active': activeNav === '装备' }" @click="activeNav = '装备'">装备</div>
     </div>
+
+    <!-- 登录模块 -->
+    <LoginRegister />
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import LoginRegister from './LoginRegister.vue'
+
 // 左侧导航栏的样式切换
 const activeNav = ref('角色')
 
