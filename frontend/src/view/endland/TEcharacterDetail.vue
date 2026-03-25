@@ -441,9 +441,6 @@ const getSkillBgColor = (damageType) => {
 
 .intro-left {
   width: 39.5rem;
-  /* height: 25.3rem; */
-  /* background-color: antiquewhite; */
-  z-index: 2;
   position: relative;
 }
 
@@ -595,7 +592,6 @@ const getSkillBgColor = (damageType) => {
   border-radius: 0.4rem;
   box-sizing: border-box;
   padding: 1rem 0.8rem;
-  /*z-index: 1000; */
 }
 
 .comment-card {
