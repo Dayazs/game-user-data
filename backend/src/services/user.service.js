@@ -9,7 +9,9 @@ async function register(account_number, password, username) {
   }
 
   const hash = await bcrypt.hash(password, 10)
-  return await registerUser(account_number, hash, username)
+  let result = await registerUser(account_number, hash, username)
+  let rows = await findUserByAccount(account_number)
+  return { result, rows }
 }
 
 // 登录

@@ -17,17 +17,28 @@ async function userRegister(req, res) {
       return res.json({ message: '用户名或密码不能有空格' })
     }
 
-    await register(account_number, password, username)
+    let { result, rows: user } = await register(
+      account_number,
+      password,
+      username,
+    )
 
     // 注册成功后直接登录
     const token = jwt.sign({ account_number }, SECRET, { expiresIn: '1d' })
+    user = {
+      account_number: user.account_number,
+      username: user.username,
+      user_avatar: user.user_avatar,
+      is_admin: user.is_admin,
+    }
 
     res.json({
       message: '注册成功',
       token,
+      user,
     })
   } catch (err) {
-    res.json({ message: err.message })
+    res.json({ message: err.message, code: 401 })
   }
 }
 
@@ -35,16 +46,23 @@ async function userRegister(req, res) {
 async function userLogin(req, res) {
   try {
     const { account_number, password } = req.body
-    const user = await login(account_number, password)
+    let user = await login(account_number, password)
     const token = jwt.sign(
       { id: user.id, account_number: user.account_number },
       SECRET,
       { expiresIn: '1d' },
     )
 
-    res.json({ message: '登录成功', token })
+    user = {
+      account_number: user.account_number,
+      username: user.username,
+      user_avatar: user.user_avatar,
+      is_admin: user.is_admin,
+    }
+
+    res.json({ message: '登录成功', token, user })
   } catch (err) {
-    res.json({ message: err.message })
+    res.json({ message: err.message, code: 403 })
   }
 }
 
