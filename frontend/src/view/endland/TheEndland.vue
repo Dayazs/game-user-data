@@ -26,27 +26,27 @@
             <div class="icon-item" title="寒冷" @click="toggleCharacterFilter('damage_type', 'property_4.png')" :class="{
               'icon-active': selectedFilters.damage_type === 'property_4.png',
               'icon-faded': selectedFilters.damage_type && selectedFilters.damage_type !== 'property_4.png'
-            }" style="background-image: url('images/general/type/property_4.png');">
+            }" style="background-image: url('/api/images/general/type/property_4.png');">
             </div>
             <div class="icon-item" title="灼热" @click="toggleCharacterFilter('damage_type', 'property_3.png')" :class="{
               'icon-active': selectedFilters.damage_type === 'property_3.png',
               'icon-faded': selectedFilters.damage_type && selectedFilters.damage_type !== 'property_3.png'
-            }" style="background-image: url('images/general/type/property_3.png');">
+            }" style="background-image: url('/api/images/general/type/property_3.png');">
             </div>
             <div class="icon-item" title="物理" @click="toggleCharacterFilter('damage_type', 'property_1.png')" :class="{
               'icon-active': selectedFilters.damage_type === 'property_1.png',
               'icon-faded': selectedFilters.damage_type && selectedFilters.damage_type !== 'property_1.png'
-            }" style="background-image: url('images/general/type/property_1.png');">
+            }" style="background-image: url('/api/images/general/type/property_1.png');">
             </div>
             <div class="icon-item" title="自然" @click="toggleCharacterFilter('damage_type', 'property_2.png')" :class="{
               'icon-active': selectedFilters.damage_type === 'property_2.png',
               'icon-faded': selectedFilters.damage_type && selectedFilters.damage_type !== 'property_2.png'
-            }" style="background-image: url('images/general/type/property_2.png');">
+            }" style="background-image: url('/api/images/general/type/property_2.png');">
             </div>
             <div class="icon-item" title="电磁" @click="toggleCharacterFilter('damage_type', 'property_5.png')" :class="{
               'icon-active': selectedFilters.damage_type === 'property_5.png',
               'icon-faded': selectedFilters.damage_type && selectedFilters.damage_type !== 'property_5.png'
-            }" style="background-image: url('images/general/type/property_5.png');">
+            }" style="background-image: url('/api/images/general/type/property_5.png');">
             </div>
           </div>
         </div>
@@ -57,37 +57,37 @@
             <div class="icon-item" title="术士" @click="toggleCharacterFilter('role_type', 'profession_5.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_5.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_5.png'
-            }" style="background-image: url('images/general/definition/profession_5.png');"></div>
+            }" style="background-image: url('/api/images/general/definition/profession_5.png');"></div>
 
 
             <div class="icon-item" title="突击" @click="toggleCharacterFilter('role_type', 'profession_4.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_4.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_4.png'
-            }" style="background-image: url('images/general/definition/profession_4.png');"></div>
+            }" style="background-image: url('/api/images/general/definition/profession_4.png');"></div>
 
 
             <div class="icon-item" title="先锋" @click="toggleCharacterFilter('role_type', 'profession_3.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_3.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_3.png'
-            }" style="background-image: url('images/general/definition/profession_3.png');"></div>
+            }" style="background-image: url('/api/images/general/definition/profession_3.png');"></div>
 
 
             <div class="icon-item" title="近卫" @click="toggleCharacterFilter('role_type', 'profession_1.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_1.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_1.png'
-            }" style="background-image: url('images/general/definition/profession_1.png');"></div>
+            }" style="background-image: url('/api/images/general/definition/profession_1.png');"></div>
 
 
             <div class="icon-item" title="辅助" @click="toggleCharacterFilter('role_type', 'profession_6.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_6.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_6.png'
-            }" style="background-image: url('images/general/definition/profession_6.png');"></div>
+            }" style="background-image: url('/api/images/general/definition/profession_6.png');"></div>
 
-            
+
             <div class="icon-item" title="重装" @click="toggleCharacterFilter('role_type', 'profession_2.png')" :class="{
               'icon-active': selectedFilters.role_type === 'profession_2.png',
               'icon-faded': selectedFilters.role_type && selectedFilters.role_type !== 'profession_2.png'
-            }" style="background-image: url('images/general/definition/profession_2.png');"></div>
+            }" style="background-image: url('/api/images/general/definition/profession_2.png');"></div>
           </div>
         </div>
       </div>
@@ -99,13 +99,13 @@
             path: '/the_endland/te_character_detail',
             query: { id: character.id }
           }">
-            <img :src="`/images/characters/${character.spell}/${character.spell}_small.jpg`" alt="" class="card-img">
+            <img :src="`/api/images/characters/${character.spell}/${character.spell}_small.jpg`" alt="" class="card-img">
             <!-- 属性/职位 -->
             <div class="card-icons">
-              <div class="mini-icon" :style="{ backgroundImage: `url(/images/general/type/${character.damage_type})` }">
+              <div class="mini-icon" :style="{ backgroundImage: `url(/api/images/general/type/${character.damage_type})` }">
               </div>
               <div class="mini-icon"
-                :style="{ backgroundImage: `url(/images/general/definition/${character.role_type})` }"></div>
+                :style="{ backgroundImage: `url(/api/images/general/definition/${character.role_type})` }"></div>
             </div>
             <!-- 角色名称 -->
             <div class="card-name">{{ character.name }}</div>
@@ -134,7 +134,7 @@ const loading = ref(true)
 onMounted(async () => {
   try {
     // 获取所有角色的基本信息
-    const res = await axios.get('api/characters')
+    const res = await axios.get('/api/characters')
     characters.value = res.data
     allCharacters = res.data.sort((a, b) => b.star_level - a.star_level)
   } finally {

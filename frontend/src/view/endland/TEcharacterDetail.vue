@@ -20,10 +20,11 @@
             <div class="intro-rowl">
               <!-- 定位 -->
               <div class="big-icon" v-if="thisCharacter"
-                :style="{ backgroundImage: `url(/images/general/definition/${thisCharacter.role_type})` }"></div>
+                :style="{ backgroundImage: `url(/api/images/general/definition/${thisCharacter.role_type})` }">
+              </div>
               <!-- 属性 -->
               <div class="big-icon" v-if="thisCharacter"
-                :style="{ backgroundImage: `url(/images/general/type/${thisCharacter.damage_type})` }">
+                :style="{ backgroundImage: `url(/api/images/general/type/${thisCharacter.damage_type})` }">
               </div>
               <!-- 角色名称 -->
               <div class="name-box">
@@ -61,7 +62,8 @@
           <!-- 角色图片 -->
           <div class="intro-img-container">
             <img v-if="thisCharacter.spell"
-              :src="`/images/characters/${thisCharacter.spell}/${thisCharacter.spell}.png`" alt="" class="intro-img">
+              :src="`/api/images/characters/${thisCharacter.spell}/${thisCharacter.spell}.png`" alt=""
+              class="intro-img">
           </div>
         </div>
         <!-- 属性技能 -->
@@ -76,8 +78,8 @@
                 <!-- 力量 -->
                 <div class="tanlent-item">
                   <!-- 属性图片 -->
-                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/strength.png)` }"
-                    :class="{
+                  <div class="talent-icon"
+                    :style="{ backgroundImage: `url(/api/images/general/property/strength.png)` }" :class="{
                       'main-ability': thisCharacterStats.main_ability === 'strength.png',
                       'secondary_ability': thisCharacterStats.secondary_ability === 'strength.png'
                     }">
@@ -89,7 +91,7 @@
                 <!-- 敏捷 -->
                 <div class="tanlent-item">
                   <!-- 属性图片 -->
-                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/agility.png)` }"
+                  <div class="talent-icon" :style="{ backgroundImage: `url(/api/images/general/property/agility.png)` }"
                     :class="{
                       'main-ability': thisCharacterStats.main_ability === 'agility.png',
                       'secondary_ability': thisCharacterStats.secondary_ability === 'agility.png'
@@ -103,7 +105,7 @@
                 <div class="tanlent-item">
                   <!-- 属性图片 -->
                   <div class="talent-icon"
-                    :style="{ backgroundImage: `url(/images/general/property/intelligence.png)` }" :class="{
+                    :style="{ backgroundImage: `url(/api/images/general/property/intelligence.png)` }" :class="{
                       'main-ability': thisCharacterStats.main_ability === 'intelligence.png',
                       'secondary_ability': thisCharacterStats.secondary_ability === 'intelligence.png'
                     }">
@@ -115,7 +117,7 @@
                 <!-- 意志 -->
                 <div class="tanlent-item">
                   <!-- 属性图片 -->
-                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/will.png)` }"
+                  <div class="talent-icon" :style="{ backgroundImage: `url(/api/images/general/property/will.png)` }"
                     :class="{
                       'main-ability': thisCharacterStats.main_ability === 'will.png',
                       'secondary_ability': thisCharacterStats.secondary_ability === 'will.png'
@@ -128,7 +130,7 @@
                 <!-- 生命 -->
                 <div class="tanlent-item">
                   <!-- 属性图片 -->
-                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/hp.png)` }">
+                  <div class="talent-icon" :style="{ backgroundImage: `url(/api/images/general/property/hp.png)` }">
                   </div>
                   <div class="tanlent-value">{{ thisCharacterStats.hp }}</div>
                   <div class="tanlent-name">生命值</div>
@@ -137,7 +139,7 @@
                 <!-- 攻击力 -->
                 <div class="tanlent-item">
                   <!-- 属性图片 -->
-                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/attack.png)` }">
+                  <div class="talent-icon" :style="{ backgroundImage: `url(/api/images/general/property/attack.png)` }">
                   </div>
                   <div class="tanlent-value">{{ thisCharacterStats.attack }}</div>
                   <div class="tanlent-name">攻击力</div>
@@ -146,7 +148,8 @@
                 <!-- 防御力 -->
                 <div class="tanlent-item">
                   <!-- 属性图片 -->
-                  <div class="talent-icon" :style="{ backgroundImage: `url(/images/general/property/defense.png)` }">
+                  <div class="talent-icon"
+                    :style="{ backgroundImage: `url(/api/images/general/property/defense.png)` }">
                   </div>
                   <div class="tanlent-value">{{ thisCharacterStats.defense }}</div>
                   <div class="tanlent-name">防御力</div>
@@ -161,7 +164,7 @@
                 <div class="skill-item" v-for="(skill, index) in thisCharacterSkills" :key="index">
                   <div class="skill-icon" :style="{ backgroundColor: getSkillBgColor(skill.damage_type) }">
                     <img v-if="thisCharacter.spell"
-                      :src="`/images/characters/${thisCharacter.spell}/skills/${thisCharacter.spell}_skill_${index + 1}.png`"
+                      :src="`/api/images/characters/${thisCharacter.spell}/skills/${thisCharacter.spell}_skill_${index + 1}.png`"
                       alt="">
                   </div>
                   <div class="skill-meta">
@@ -499,7 +502,7 @@ const getSkillBgColor = (damageType) => {
   width: 1.5rem;
   height: 1.6rem;
 
-  background-image: url(/images/general/star.png);
+  background-image: url(/api/images/general/star.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
