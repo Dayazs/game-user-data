@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="active-login">
-      <img v-if="isAuth" src="../../../public/acvtiveLogin.png" alt="" class="active-login-img">
+      <img v-if="isAuth" src="../../acvtiveLogin.png" alt="" class="active-login-img">
     </div>
   </div>
 
@@ -267,6 +267,7 @@ onMounted(() => {
     ...userInfo
   }
   if (!token) {
+    localStorage.removeItem('userInfo')
     return
   }
 
@@ -278,6 +279,7 @@ onMounted(() => {
       isAuth.value = true
     } else {
       localStorage.removeItem('token')
+      localStorage.removeItem('userInfo')
     }
   } catch {
     localStorage.removeItem('token')
