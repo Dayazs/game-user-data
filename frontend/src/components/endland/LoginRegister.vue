@@ -1,6 +1,6 @@
 <template>
   <!-- 登录模块 -->
-  <div class="login-module">
+  <div class="login-module" v-if="isReady">
     <!-- 用户头像 -->
     <div class="user-avatar">
       <img v-if="resData.user_avatar"
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="active-login">
-      <img v-if="isAuth" src="../../acvtiveLogin.png" alt="" class="active-login-img">
+      <img v-if="isAuth" src="../../imgs/acvtiveLogin.png" alt="" class="active-login-img">
     </div>
   </div>
 
@@ -107,27 +107,29 @@
 </template>
 
 <script setup>
+
 import { onMounted, ref } from 'vue'
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
+import { useUserStore } from '@/stores/user'
 
 axios.interceptors.request.use(config => {
   const token = localStorage.getItem('token')
-  if(token){
+  if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
   return config
 })
-
-
 
 // 显示/关闭登录小窗
 const showModal = ref(false)
 // 切换登录注册
 const isLogin = ref(true)
 
-// 表单数据
-const form = ref({
+const isReady = ref(false)
+
+// 对于数据的重置操作
+const initForm = () => ({
   account_number: '',
   password: '',
   confirmPassword: '',
@@ -135,24 +137,33 @@ const form = ref({
   agree: false
 })
 
-// 错误状态
-const errors = ref({
+const initErrors = () => ({
   account_number: '',
   password: '',
   confirmPassword: '',
   username: ''
 })
 
-// 响应数据
-const resData = ref({
+const initUser = () => ({
   account_number: '',
-  username: '',
+  id: '',
   is_admin: '',
-  user_avatar: ''
+  user_avatar: '',
+  username: ''
 })
+
+// 表单数据
+const form = ref(initForm())
+
+// 错误状态
+const errors = ref(initErrors())
+
+// 响应数据
+const resData = ref(initUser())
 
 // 登录状态
 const isAuth = ref(false)
+const userStore = useUserStore()
 
 
 // 登录
@@ -160,12 +171,7 @@ function open() {
   showModal.value = true
   isLogin.value = true
   // 清空状态
-  form.value = {
-    account_number: '',
-    password: '',
-    confirmPassword: '',
-    username: '',
-  }
+  form.value = initForm()
 }
 
 // 关闭
@@ -173,12 +179,7 @@ function close() {
   showModal.value = false
   form.value.agree = false
   // 清空状态
-  errors.value = {
-    account_number: '',
-    password: '',
-    confirmPassword: '',
-    username: ''
-  }
+  errors.value = initErrors()
 }
 
 // 注册
@@ -186,23 +187,13 @@ function register() {
   isLogin.value = false
   showModal.value = true
   // 清空状态
-  form.value = {
-    account_number: '',
-    password: '',
-    confirmPassword: '',
-    username: '',
-  }
+  form.value = initForm()
 }
 // 切换
 function toggle() {
   isLogin.value = !isLogin.value
   // 清空状态
-  errors.value = {
-    account_number: '',
-    password: '',
-    confirmPassword: '',
-    username: ''
-  }
+  errors.value = initErrors()
 }
 
 // 校验
@@ -210,12 +201,7 @@ function validate() {
   const { account_number, password, confirmPassword, username } = form.value
 
   // 清空
-  errors.value = {
-    account_number: '',
-    password: '',
-    confirmPassword: '',
-    username: ''
-  }
+  errors.value = initErrors()
 
   let valid = true
 
@@ -259,30 +245,30 @@ function validate() {
   return valid
 }
 
-onMounted(() => {
+onMounted(async () => {
   const token = localStorage.getItem('token')
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-  resData.value = {
-    ...resData.value,
-    ...userInfo
-  }
-  if (!token) {
-    localStorage.removeItem('userInfo')
-    return
-  }
 
   try {
+    if (!token) return
     const decoded = jwtDecode(token)
 
     // 判断是否过期
     if (decoded.exp * 1000 > Date.now()) {
+      // 获取用户数据
+      const userData = await axios.post('/api/user/userData')
+      resData.value = {
+        ...resData.value,
+        ...userData.data.user.userData
+      }
+
       isAuth.value = true
     } else {
       localStorage.removeItem('token')
-      localStorage.removeItem('userInfo')
     }
   } catch {
     localStorage.removeItem('token')
+  } finally {
+    isReady.value = true
   }
 })
 
@@ -309,19 +295,22 @@ async function submit() {
     alert('注册成功!')
   }
 
+  // 存储token
   localStorage.setItem('token', res.data.token)
-  localStorage.setItem('userInfo',JSON.stringify(res.data.user))
 
-  // 写入用户信息
-  // resData.value.account_number = res.data.user.account_number
-  // resData.value.username = res.data.user.username
-  // resData.value.is_admin = res.data.user.is_admin
-  // resData.value.user_avatar = res.data.user.user_avatar
   // 对象展开
+  // 获取用户数据
+  const userData = await axios.post('/api/user/userData')
+
+  // 存储用户数据
+  localStorage.setItem('user', JSON.stringify(userData.data.user.userData))
+
   resData.value = {
     ...resData.value,
-    ...res.data.user
+    ...userData.data.user.userData
   }
+
+  userStore.triggerRefresh()
 
   isAuth.value = true
   close()
@@ -332,13 +321,12 @@ function logout() {
   if (!confirm('确定要登出吗?')) return
 
   localStorage.removeItem('token')
-  localStorage.removeItem('userInfo')
-  resData.value = {
-    account_number: '',
-    username: '',
-    is_admin: '',
-    user_avatar: ''
-  }
+  localStorage.removeItem('user')
+
+  // 更新评论区状态
+  userStore.triggerRefresh()
+
+  resData.value = initUser()
   isAuth.value = false
 }
 </script>
@@ -568,14 +556,14 @@ a {
   color: #fff;
 }
 
-.active-login{
+.active-login {
   width: 1.4rem;
   height: 1.4rem;
   margin-left: 1.75rem;
   margin-top: 0.2rem;
 }
 
-.active-login-img{
+.active-login-img {
   width: 100%;
   height: 100%;
 }
