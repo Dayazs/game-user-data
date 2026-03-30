@@ -4,9 +4,14 @@ import App from './App.vue'
 // 引入全局样式
 import '@/css/global.css'
 import router from './router'
+import { createPinia } from 'pinia'
+
+// 创建pinia实例
+const pinia = createPinia()
 
 createApp(App)
   .use(router)
+  .use(pinia)
   .mount('#app')
 
 
