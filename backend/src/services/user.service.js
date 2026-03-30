@@ -1,4 +1,8 @@
-import { findUserByAccount, registerUser } from '../models/user.model.js'
+import {
+  findUserByAccount,
+  registerUser,
+  findUser,
+} from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 
 // 注册
@@ -9,9 +13,7 @@ async function register(account_number, password, username) {
   }
 
   const hash = await bcrypt.hash(password, 10)
-  let result = await registerUser(account_number, hash, username)
-  let rows = await findUserByAccount(account_number)
-  return { result, rows }
+  return await registerUser(account_number, hash, username)
 }
 
 // 登录
@@ -29,4 +31,11 @@ async function login(account_number, password) {
   return user
 }
 
-export { register, login }
+// 获取用户信息
+async function getUser(user_id) {
+  const userData = await findUser(user_id)
+  const loginTime = Date.now()
+  return { userData, loginTime }
+}
+
+export { register, login, getUser }
