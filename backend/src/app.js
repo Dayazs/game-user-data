@@ -10,6 +10,7 @@ app.use(express.json())
 // 用户相关接口
 app.use('/api/user', userRouter)
 
+// 角色相关接口
 app.use('/api/characters', characterRoutes)
 
 // 评论相关接口
