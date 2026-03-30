@@ -5,7 +5,7 @@ import Home from '@/view/Home.vue'
 import Wuwa from '@/view/wuwa/Wuwa.vue'
 import WuwaDetail from '@/view/wuwa/WuwaDetail.vue'
 
-import LoginRegister from '@/components/endland/LoginRegister.vue'
+import CommentModule from '@/components/endland/CommentModule.vue'
 
 const routes = [
   {
@@ -39,6 +39,13 @@ const routes = [
     name: 'TEcharacterDetail',
     component: TEcharacterDetail,
     // props: true
+  },
+
+  // 测试评论模块
+  {
+    path: '/test',
+    name: 'CommentModule',
+    component: CommentModule,
   },
 ]
 
