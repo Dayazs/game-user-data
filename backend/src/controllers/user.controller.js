@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { register, login } from '../services/user.service.js'
+import { register, login, getUser } from '../services/user.service.js'
 import secretData from '../config/jwt.json' assert { type: 'json' }
 
 const SECRET = secretData.SECRET
@@ -17,25 +17,14 @@ async function userRegister(req, res) {
       return res.json({ message: '用户名或密码不能有空格' })
     }
 
-    let { result, rows: user } = await register(
-      account_number,
-      password,
-      username,
-    )
+    await register(account_number, password, username)
 
     // 注册成功后直接登录
     const token = jwt.sign({ account_number }, SECRET, { expiresIn: '1d' })
-    user = {
-      account_number: user.account_number,
-      username: user.username,
-      user_avatar: user.user_avatar,
-      is_admin: user.is_admin,
-    }
 
     res.json({
       message: '注册成功',
       token,
-      user,
     })
   } catch (err) {
     res.json({ message: err.message, code: 401 })
@@ -53,17 +42,20 @@ async function userLogin(req, res) {
       { expiresIn: '1d' },
     )
 
-    user = {
-      account_number: user.account_number,
-      username: user.username,
-      user_avatar: user.user_avatar,
-      is_admin: user.is_admin,
-    }
-
-    res.json({ message: '登录成功', token, user })
+    res.json({ message: '登录成功', token })
   } catch (err) {
     res.json({ message: err.message, code: 403 })
   }
 }
 
-export { userRegister, userLogin }
+// 获取用户数据
+async function userData(req, res) {
+  try {
+    const user_id = req.user.id
+    const user = await getUser(user_id)
+    res.json({ message: '获取用户数据成功', user })
+  } catch (err) {
+    res.json({ message: err.message })
+  }
+}
+export { userRegister, userLogin, userData }
