@@ -186,19 +186,24 @@
           </div>
           <!-- 身体 -->
           <div class="comment-card-body">
-            <div class="comment-card-body-list"></div>
-            <div class="comment-card-body-load-more-empty">暂无更多评论</div>
+            <div class="comment-card-body-list">
+              <!-- 每个评论 -->
+              <CommentModule :character_id="characterId" @has-comment="handleHasComment" />
+
+            </div>
+            <div v-if="!hasComment" class="comment-card-body-load-more-empty">暂无更多评论</div>
           </div>
           <!-- 输入框 -->
           <div class="comment-card-footer">
             <div class="comment-card-reply">
-              <textarea name="" id="" class="coment-card-reply-textarea" placeholder="请输入评论" maxlength="1024"
-                rows="4"></textarea>
-              <div class="comment-card-reply-textarea-count">0/1024</div>
+              <textarea name="" id="" class="coment-card-reply-textarea" placeholder="请输入评论" maxlength="200" rows="4"
+                v-model="userInput" @keydown="handleEnter"></textarea>
+              <div class="comment-card-reply-textarea-count">0/200</div>
             </div>
             <div class="comment-card-reply-potions"></div>
             <div class="comment-card-emoji"></div>
           </div>
+          <div>{{ userInput }}</div>
         </div>
       </div>
     </div>
@@ -206,9 +211,21 @@
 </template>
 <script setup>
 import SideNav from '@/components/endland/SideNav.vue'
+import CommentModule from '@/components/endland/CommentModule.vue'
 import axios from 'axios'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+
+
+// 携带token
+axios.interceptors.request.use(config => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
+
 
 // 接收传递过来的角色id
 const route = useRoute()
@@ -226,6 +243,14 @@ const thisCharacterStats = ref(null)
 const thisCharacterSkills = ref([])
 
 const loading = ref(true)
+
+
+// 接收子组件返回值(是否有评论)
+const hasComment = ref(true)
+const handleHasComment = val => {
+  hasComment.value = val
+}
+
 // 并行
 onMounted(async () => {
   try {
@@ -260,6 +285,47 @@ const propertyColorMap = {
 
 const getSkillBgColor = (damageType) => {
   return propertyColorMap[damageType] || ''
+}
+
+
+
+// 输入框逻辑
+// 文本内容
+let userInput = ref('')
+
+// 是否允许发送
+const canSend = ref(true)
+
+const handleEnter = (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    // 阻止换行默认行为
+    e.preventDefault()
+
+    if (!canSend.value) {
+      // 提示发送太频繁了
+      
+      return
+    }
+    if (!userInput.value.trim()) return
+    sendComment()
+  }
+}
+
+const sendComment = async () => {
+  canSend.value = false
+  try {
+    // 回车发送请求
+    await axios.post('/api/comment/addComment', {
+      comment_text: userInput.value,
+      character_id: route.query.id
+    })
+    userInput.value = ''
+  } finally {
+    // 冷却时间3秒,在此期间不能发送评论
+    setTimeout(() => {
+      canSend.value = true
+    }, 3000)
+  }
 }
 
 
@@ -631,9 +697,20 @@ const getSkillBgColor = (damageType) => {
   padding-bottom: 50px;
 }
 
+/* 隐藏评论区滚动条 */
+.comment-card-body::-webkit-scrollbar {
+  display: none;
+}
+
 .comment-card-body-list {
   width: 100%;
-  font-size: 1.8rem;
+  /* font-size: 1.8rem; */
+}
+
+.comment-card-body-item-right-text-pulldown {
+  height: 1.3rem;
+  width: 100%;
+  background: #e535e2;
 }
 
 .comment-card-body-load-more-empty {
