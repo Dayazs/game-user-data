@@ -18,4 +18,12 @@ async function registerUser(account_number, password, username) {
   return result
 }
 
-export { findUserByAccount, registerUser }
+// 找用户
+async function findUser(user_id) {
+  const [rows] = await pool.query(
+    'SELECT users.id, users.account_number, users.is_admin, users.user_avatar, users.username FROM users WHERE id=?',
+    [user_id],
+  )
+  return rows[0]
+}
+export { findUserByAccount, registerUser, findUser }
