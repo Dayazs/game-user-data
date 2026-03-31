@@ -13,7 +13,7 @@ function auth(req, res, next) {
   try {
     const decoded = jwt.verify(token, SECRET)
     req.user = decoded
-    console.log('token验证成功')
+    // console.log('token验证成功')
     next()
   } catch (err) {
     res.json({ message: 'token无效', code: 401 })
