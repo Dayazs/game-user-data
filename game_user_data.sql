@@ -11,7 +11,7 @@
  Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 27/02/2026 17:44:23
+ Date: 31/03/2026 18:36:21
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `character_dialogues`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_character`(`character_id` ASC) USING BTREE,
   CONSTRAINT `fk_character` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of character_dialogues
@@ -50,6 +50,8 @@ INSERT INTO `character_dialogues` VALUES (11, 11, '\"信使要护送许多秘密
 INSERT INTO `character_dialogues` VALUES (12, 12, '\"事态紧急，我希望尽快了解你的作战计划……最好就是现在。\"', '骏卫来自罗德岛，在该公司与终末地工业的框架协议范围内，以军事顾问的身份为终末地工业提供服务。\r\n骏卫拥有丰富的军事理论知识和团队作战经验，能够在战场上指挥应对各种突发状况。在他来到终末地工业之前，就已经在铁誓军中担任了盾卫旗队的指挥官。在抗击天使的最前线，他和他的盾卫被誉为最值得信赖的作战队伍之一。因为塔卫二日益复杂的局势需要，他毅然决然地选择加入终末地工业。\r\n他坚信着管理员会将塔卫二带往一条全新的道路，亦如他曾经所认为的那样。\r\n\r\n“我相信，管理员你所做的，会让这惨烈的循环得到一份庄严的结局。”', '2026-02-27 16:30:23', '2026-02-27 16:30:23');
 INSERT INTO `character_dialogues` VALUES (13, 13, '\"我来终末地就是为了学东西的！只是……这里的东西多得有点儿学不完啊……要加把劲！\"', '黎风出生于武陵城，目前正在终末地工业特种技术部门学习实践。\r\n黎风是武陵闻名遐迩、人见人爱的孩子王。在大潘多年的教导下，黎风习得了一手漂亮的枪法，以此向他扬善惩恶的目标而努力。从他的外表来看，很难有人联想到他过去的阴影——事故击碎了原本幸福美满的家庭，也使得他失去了一条手臂。但灾难始终阻挡不了少年的锋芒，他认真而热情地成长，渴望承担更多的责任。有朝一日，他会独当一面，然后回到需要他保护的家乡。\r\n\r\n“有朝一日，我会扛起一切的。管理员，等我。”', '2026-02-27 16:30:46', '2026-02-27 16:30:46');
 INSERT INTO `character_dialogues` VALUES (14, 14, '\"扰乱？牵制？还是……一步到位？\"', '终末地Z7行动组成员，负责侦察和战线扰乱工作。萤石对街头规矩和宵小伎俩的了解和她的铳法一样，已经为小队避免了不计其数的麻烦。她来自文明环带边缘的开拓区，在一次又一次迁移和流浪中锻炼出了与众不同的观察力。大部分时候，她只是在房间一角似笑非笑地旁听，就能让人感到自己的每一丝纰漏都已经被看穿，压力倍增。\r\n然而，这绝不意味着萤石是个善解人意的人——对人心的敏锐把握不仅给萤石带来了出色的战场嗅觉，却也让她成为了小队当中最擅长用几句话招惹任何人，给工作带来无数麻烦的不稳定因素。\r\n\r\n“不说点什么吗？恩……要不，散会？”', '2026-02-27 16:31:04', '2026-02-27 16:31:04');
+INSERT INTO `character_dialogues` VALUES (15, 16, '\"大当家在此，你、你，还有你，都听我指挥！\"', '汤汤，性格直爽，讲究义气的清波寨大当家。\r\n\r\n婴儿时期的她顺着河水漂到了清波寨，被寨民收养。虽然年纪尚小，但她已经做好了承担清波寨未来的打算。\r\n\r\n经历过许多挫折的她依旧对世界充满热情。为了寻找问题的答案，也为了更好地发展清波寨，汤汤来到了终末地工业。\r\n\r\n别让她跟弭弗碰上，可能会砸坏东西——某位总后勤办事处的干员如是说。\r\n\r\n“把我叫过来，就是为了夸我呀？那你再夸点儿，我就爱听人说真话！”', '2026-03-25 20:28:47', '2026-03-25 20:28:47');
+INSERT INTO `character_dialogues` VALUES (16, 17, '\"对于精锐来说小菜一碟！\"', '洛茜娜·狼珀·卢皮诺，狼卫的妹妹，狼群的掌上明珠。在一场狼群氏族与碾骨氏族的恩怨中，众多老狼为了救出她付出了血的代价，彼时的鲜血染红了襁褓……\r\n\r\n狼卫常年脱离氏族独自行动，但狼群需要一个领导者，洛茜接下了这一责任。她一直觉得年少成名的哥哥更应该执掌整个狼群，总是不停提醒和催促他这一点。氏族的老狼们希望洛茜能在这个年纪做更多自己喜欢的事，但洛茜最终还是无法将“责任”从心头挪开。她想为家人、为氏族变得更加可靠、强大。\r\n\r\n憧憬着英雄故事的洛茜，偶尔幻想着，有一天，自己能与传说中的英雄共同奋战——这是她给自己留下的一点点“自我时间”。\r\n\r\n“狼群从不畏惧留下伤痕！”', '2026-03-25 20:36:17', '2026-03-25 20:36:17');
 
 -- ----------------------------
 -- Table structure for character_role_damage
@@ -84,70 +86,79 @@ CREATE TABLE `character_skills`  (
   `skill_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `skill_type` enum('普通攻击','战技','连携技','终结技') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `damage_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '伤害类型',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `character_id`(`character_id` ASC) USING BTREE,
   CONSTRAINT `character_skills_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 67 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of character_skills
 -- ----------------------------
-INSERT INTO `character_skills` VALUES (1, 1, '严霜之舞', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (2, 1, '塞什卡的秘传', '战技', NULL);
-INSERT INTO `character_skills` VALUES (3, 1, '噬冬', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (4, 1, '临终别礼', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (5, 2, '雀跃扳机', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (6, 2, '冰冰弹·β型', '战技', NULL);
-INSERT INTO `character_skills` VALUES (7, 2, '速冻仔·υ37', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (8, 2, '冷冻射手', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (9, 3, '燃烬', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (10, 3, '焚灭', '战技', NULL);
-INSERT INTO `character_skills` VALUES (11, 3, '沸腾', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (12, 3, '沸腾', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (13, 4, '秘杖·束能技艺', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (14, 4, '秘杖·束能技艺', '战技', NULL);
-INSERT INTO `character_skills` VALUES (15, 4, '秘杖·矩阵位移', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (16, 4, '秘杖·重力场', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (17, 5, '秘杖·重力场', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (18, 5, '奔腾的多利', '战技', NULL);
-INSERT INTO `character_skills` VALUES (19, 5, '火山蘑菇云', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (20, 5, '毛茸茸派对', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (21, 6, '破飞霞', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (22, 6, '归穹宇', '战技', NULL);
-INSERT INTO `character_skills` VALUES (23, 6, '见天河', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (24, 6, '冽风霜', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (25, 7, '协议α·突破', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (26, 7, '协议ω·雷击', '战技', NULL);
-INSERT INTO `character_skills` VALUES (27, 7, '即时协议·闪链\r\n即时协议·闪链', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (28, 7, '协议ε·70.41κ', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (29, 8, '滚刀切！', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (30, 8, '颠勺！', '战技', NULL);
-INSERT INTO `character_skills` VALUES (31, 8, '加料！', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (32, 8, '切丝入锅！', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (33, 9, '冷却', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (34, 9, '分布式拒绝服务', '战技', NULL);
-INSERT INTO `character_skills` VALUES (35, 9, '压力测试', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (36, 9, '栈溢出', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (37, 10, '失温猛击', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (38, 10, '饱和性防御', '战技', NULL);
-INSERT INTO `character_skills` VALUES (39, 10, '极地救援', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (40, 10, '凛冽寒霜', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (41, 11, '雷枪·疾袭', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (42, 11, '雷枪·截回', '战技', NULL);
-INSERT INTO `character_skills` VALUES (43, 11, '雷枪·掣击', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (44, 11, '雷枪·决颤', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (45, 12, '全面攻势', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (46, 12, '粉碎阵线', '战技', NULL);
-INSERT INTO `character_skills` VALUES (47, 12, '盈月邀击', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (48, 12, '盾卫旗队，上前', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (49, 13, '摧破', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (50, 13, '荡浊身', '战技', NULL);
-INSERT INTO `character_skills` VALUES (51, 13, '忿怒相', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (52, 13, '不动心', '终结技', NULL);
-INSERT INTO `character_skills` VALUES (53, 14, '独门射击法', '普通攻击', NULL);
-INSERT INTO `character_skills` VALUES (54, 14, '小惊喜', '战技', NULL);
-INSERT INTO `character_skills` VALUES (55, 14, '免费赠礼', '连携技', NULL);
-INSERT INTO `character_skills` VALUES (56, 14, '巅峰闹剧', '终结技', NULL);
+INSERT INTO `character_skills` VALUES (1, 1, '严霜之舞', '普通攻击', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (2, 1, '塞什卡的秘传', '战技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (3, 1, '噬冬', '连携技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (4, 1, '临终别礼', '终结技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (5, 2, '雀跃扳机', '普通攻击', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (6, 2, '冰冰弹·β型', '战技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (7, 2, '速冻仔·υ37', '连携技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (8, 2, '冷冻射手', '终结技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (9, 3, '燃烬', '普通攻击', NULL, 'property_3.png');
+INSERT INTO `character_skills` VALUES (10, 3, '焚灭', '战技', NULL, 'property_3.png');
+INSERT INTO `character_skills` VALUES (11, 3, '沸腾', '连携技', NULL, 'property_3.png');
+INSERT INTO `character_skills` VALUES (12, 3, '黄昏', '终结技', NULL, 'property_3.png');
+INSERT INTO `character_skills` VALUES (13, 4, '秘杖·束能技艺', '普通攻击', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (14, 4, '秘杖·引力模式', '战技', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (15, 4, '秘杖·矩阵位移', '连携技', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (16, 4, '秘杖·重力场', '终结技', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (17, 5, '岩石的轻语', '普通攻击', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (18, 5, '奔腾的多利', '战技', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (19, 5, '火山蘑菇云', '连携技', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (20, 5, '毛茸茸派对', '终结技', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (21, 6, '破飞霞', '普通攻击', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (22, 6, '归穹宇', '战技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (23, 6, '见天河', '连携技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (24, 6, '冽风霜', '终结技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (25, 7, '协议α·突破', '普通攻击', NULL, 'property_5.png');
+INSERT INTO `character_skills` VALUES (26, 7, '协议ω·雷击', '战技', NULL, 'property_5.png');
+INSERT INTO `character_skills` VALUES (27, 7, '即时协议·闪链', '连携技', NULL, 'property_5.png');
+INSERT INTO `character_skills` VALUES (28, 7, '协议ε·70.41κ', '终结技', NULL, 'property_5.png');
+INSERT INTO `character_skills` VALUES (29, 8, '滚刀切！', '普通攻击', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (30, 8, '颠勺！', '战技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (31, 8, '加料！', '连携技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (32, 8, '切丝入锅！', '终结技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (33, 9, '冷却', '普通攻击', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (34, 9, '分布式拒绝服务', '战技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (35, 9, '压力测试', '连携技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (36, 9, '栈溢出', '终结技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (37, 10, '失温猛击', '普通攻击', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (38, 10, '饱和性防御', '战技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (39, 10, '极地救援', '连携技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (40, 10, '凛冽寒霜', '终结技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (41, 11, '雷枪·疾袭', '普通攻击', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (42, 11, '雷枪·截回', '战技', NULL, 'property_5.png');
+INSERT INTO `character_skills` VALUES (43, 11, '雷枪·掣击', '连携技', NULL, 'property_5.png');
+INSERT INTO `character_skills` VALUES (44, 11, '雷枪·决颤', '终结技', NULL, 'property_5.png');
+INSERT INTO `character_skills` VALUES (45, 12, '全面攻势', '普通攻击', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (46, 12, '粉碎阵线', '战技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (47, 12, '盈月邀击', '连携技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (48, 12, '盾卫旗队，上前', '终结技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (49, 13, '摧破', '普通攻击', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (50, 13, '荡浊身', '战技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (51, 13, '忿怒相', '连携技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (52, 13, '不动心', '终结技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (53, 14, '独门射击法', '普通攻击', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (54, 14, '小惊喜', '战技', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (55, 14, '免费赠礼', '连携技', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (56, 14, '巅峰闹剧', '终结技', NULL, 'property_2.png');
+INSERT INTO `character_skills` VALUES (59, 16, '崩你脑壳!', '普通攻击', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (60, 16, '踏潮卷浪!', '战技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (61, 16, '河水，助我!', '连携技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (62, 16, '大当家盯着呢!', '终结技', NULL, 'property_4.png');
+INSERT INTO `character_skills` VALUES (63, 17, '沸腾狼血', '普通攻击', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (64, 17, '血红之影', '战技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (65, 17, '燎影时刻', '连携技', NULL, 'property_1.png');
+INSERT INTO `character_skills` VALUES (66, 17, '“利爪”奇袭', '终结技', NULL, 'property_3.png');
 
 -- ----------------------------
 -- Table structure for character_stats
@@ -168,7 +179,7 @@ CREATE TABLE `character_stats`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `character_id`(`character_id` ASC) USING BTREE,
   CONSTRAINT `character_stats_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of character_stats
@@ -187,6 +198,8 @@ INSERT INTO `character_stats` VALUES (11, 11, 12, 10, 14, 15, 500, 30, 0, 'will.
 INSERT INTO `character_stats` VALUES (12, 12, 12, 13, 10, 20, 500, 30, 0, 'will.png', 'agility.png');
 INSERT INTO `character_stats` VALUES (13, 13, 14, 20, 13, 12, 500, 30, 0, 'agility.png', 'strength.png');
 INSERT INTO `character_stats` VALUES (14, 14, 14, 14, 12, 10, 500, 30, 0, 'agility.png', 'strength.png');
+INSERT INTO `character_stats` VALUES (19, 16, 13, 23, 8, 10, 500, 30, 0, 'agility.png', 'strength.png');
+INSERT INTO `character_stats` VALUES (20, 17, 9, 23, 14, 9, 500, 30, 0, 'agility.png', 'intelligence.png');
 
 -- ----------------------------
 -- Table structure for characters
@@ -203,7 +216,7 @@ CREATE TABLE `characters`  (
   `role_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '定位',
   `damage_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '属性',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of characters
@@ -222,5 +235,72 @@ INSERT INTO `characters` VALUES (11, 'aiweiwenna', '艾维文娜', '环塔商会
 INSERT INTO `characters` VALUES (12, 'junwei', '骏卫', '罗德岛', '黎博利', 6, '2026-02-27 16:16:29', 'profession_3.png', 'property_1.png');
 INSERT INTO `characters` VALUES (13, 'lifeng', '黎风', '宏山科学院', '阿纳萨', 6, '2026-02-27 16:17:25', 'profession_1.png', 'property_1.png');
 INSERT INTO `characters` VALUES (14, 'yingshi', '莹石', '终末地工业', '斐迪亚', 4, '2026-02-27 16:20:18', 'profession_5.png', 'property_2.png');
+INSERT INTO `characters` VALUES (16, 'tangtang', '汤汤', '终末地工业', '菲林', 6, '2026-03-25 20:14:49', 'profession_5.png', 'property_4.png');
+INSERT INTO `characters` VALUES (17, 'luoxi', '洛茜', '终末地工业', '鲁珀', 6, '2026-03-25 20:26:38', 'profession_1.png', 'property_1.png');
+
+-- ----------------------------
+-- Table structure for comments
+-- ----------------------------
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE `comments`  (
+  `comment_id` int NOT NULL AUTO_INCREMENT COMMENT '每条评论id',
+  `user_id` int NOT NULL COMMENT '发送评论的用户id',
+  `comment_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '评论信息',
+  `comment_time` datetime NOT NULL COMMENT '评论时间',
+  `like_number` int NOT NULL DEFAULT 0 COMMENT '点赞次数',
+  `character_id` int NOT NULL COMMENT '哪个角色',
+  PRIMARY KEY (`comment_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of comments
+-- ----------------------------
+INSERT INTO `comments` VALUES (33, 4, '别礼角色第一条评论', '2026-03-31 18:05:40', 1, 1);
+INSERT INTO `comments` VALUES (34, 4, '伊冯角色第一条评论', '2026-03-31 18:10:26', 0, 2);
+INSERT INTO `comments` VALUES (35, 4, '莱万汀角色第一条评论', '2026-03-31 18:10:36', 0, 3);
+INSERT INTO `comments` VALUES (36, 4, '洛茜第一条评论', '2026-03-31 18:18:47', 1, 17);
+
+-- ----------------------------
+-- Table structure for record_user_likes
+-- ----------------------------
+DROP TABLE IF EXISTS `record_user_likes`;
+CREATE TABLE `record_user_likes`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '记录用户点赞评论主键',
+  `user_id` int NOT NULL COMMENT '用户id',
+  `comment_id` int NOT NULL COMMENT '评论id',
+  `is_like` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否点赞',
+  `character_id` int NOT NULL COMMENT '哪个角色',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `user_id`(`user_id` ASC, `comment_id` ASC, `character_id` ASC) USING BTREE COMMENT '防止记录重复'
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of record_user_likes
+-- ----------------------------
+INSERT INTO `record_user_likes` VALUES (12, 4, 36, 1, 17);
+INSERT INTO `record_user_likes` VALUES (13, 4, 33, 1, 1);
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `account_number` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户账号',
+  `password` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密码',
+  `is_admin` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '是否为管理员',
+  `user_avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户头像',
+  `username` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户名称',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES (4, 'dayazs', '$2b$10$KI8K9GQX7W2fuRA5aWYaouPpu/xtoAq2kmjSNW6.FRTYc12cBARqC', '1', 'xianhui.jpg', '大鸭子兽');
+INSERT INTO `users` VALUES (5, 'testUser', '$2b$10$rIR//ZowvVFjCjf5CfcWHuhT6HLpRBxDVcbjSSYvZjOGyn/3nlKK2', '0', NULL, '测试用户');
+INSERT INTO `users` VALUES (13, 'testUser2', '$2b$10$kQTNKY8KTIuI5FcPxvbE6uC92c7Uc5QojN96nDoV8Il6vBRyDYwpG', '0', NULL, '测试用户2');
+INSERT INTO `users` VALUES (14, 'testUser3', '$2b$10$Cs/4h1t62mQR5pcycW9mR.YIU1zH1RoAdqEpdvs/kEyVHuTuPdOZS', '0', NULL, '测试用户3');
+INSERT INTO `users` VALUES (15, 'testUser4', '$2b$10$uHMctH2SX0q/HO04j/WTi.hE85H8hjHmaJ2A4darchnmkJu.NIN8m', '0', NULL, '测试用户4');
 
 SET FOREIGN_KEY_CHECKS = 1;
