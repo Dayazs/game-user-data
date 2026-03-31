@@ -10,9 +10,9 @@ async function postComment(req, res) {
     const user_id = req.user.id
     const { comment_text, character_id } = req.body
 
-    await createComment(user_id, comment_text, character_id)
+    let result = await createComment(user_id, comment_text, character_id)
 
-    res.json({ message: '评论成功' ,code:20000})
+    res.json({ message: '评论成功', code: 20000, comment_id: result.insertId })
   } catch (err) {
     res.json({ message: err.message })
   }
@@ -25,7 +25,7 @@ async function likeComment(req, res) {
     const { comment_id, character_id } = req.body
 
     const msg = await toggleLike(user_id, comment_id, character_id)
-    res.json({ message: msg })
+    res.json({ message: msg ,code: 20000})
   } catch (err) {
     res.json({ message: err.message })
   }
@@ -44,7 +44,3 @@ async function getCharacterIdByComment(req, res) {
 }
 
 export { postComment, likeComment, getCharacterIdByComment }
-
-// 销毁前解绑
-// 计算属性中使用异步
-// mounted使用async对其他函数有影响吗
