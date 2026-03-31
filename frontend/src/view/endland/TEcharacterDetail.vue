@@ -188,7 +188,7 @@
           <div class="comment-card-body">
             <div class="comment-card-body-list">
               <!-- 每个评论 -->
-              <CommentModule :character_id="characterId" @has-comment="handleHasComment" />
+              <CommentModule :character_id="characterId" @has-comment="handleHasComment" ref="commentRef" />
 
             </div>
             <div v-if="!hasComment" class="comment-card-body-load-more-empty">暂无更多评论</div>
@@ -198,12 +198,16 @@
             <div class="comment-card-reply">
               <textarea name="" id="" class="coment-card-reply-textarea" placeholder="请输入评论" maxlength="200" rows="4"
                 v-model="userInput" @keydown="handleEnter"></textarea>
-              <div class="comment-card-reply-textarea-count">0/200</div>
+              <div class="comment-card-reply-group">
+                <button class="coment-card-reply-textarea-send" :disabled="!isLogin" :class="{ active: isLogin }"
+                  @click="sendComment">{{ isLogin ? '发送' : '未登录' }}</button>
+                <div class="comment-card-reply-textarea-count">{{ userInput.length }}/200</div>
+              </div>
             </div>
             <div class="comment-card-reply-potions"></div>
             <div class="comment-card-emoji"></div>
           </div>
-          <div>{{ userInput }}</div>
+          <div>{{ frequently }}</div>
         </div>
       </div>
     </div>
@@ -213,8 +217,9 @@
 import SideNav from '@/components/endland/SideNav.vue'
 import CommentModule from '@/components/endland/CommentModule.vue'
 import axios from 'axios'
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 
 
 // 携带token
@@ -244,6 +249,11 @@ const thisCharacterSkills = ref([])
 
 const loading = ref(true)
 
+// 登录状态
+const userStore = useUserStore()
+
+// 评论信息
+const commentRef = ref(null)
 
 // 接收子组件返回值(是否有评论)
 const hasComment = ref(true)
@@ -265,6 +275,8 @@ onMounted(async () => {
       axios.get('/api/characters/skill', { params: { id: characterId } })
     ])
 
+    isLogin.value = userStore.isLogin
+
     thisCharacter.value = res.data[0]
     thisCharacterDialogues.value = dialogues.data[0]
     thisCharacterStats.value = stats.data[0]
@@ -272,7 +284,8 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
-})
+}
+)
 
 // 计算属性来设置技能底色
 const propertyColorMap = {
@@ -295,15 +308,22 @@ let userInput = ref('')
 
 // 是否允许发送
 const canSend = ref(true)
+// 发送太频繁了文字
+let frequently = ref('')
 
 const handleEnter = (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
     // 阻止换行默认行为
     e.preventDefault()
 
+    if (!isLogin.value) {
+      userInput.value = ''
+      return
+    }
+
     if (!canSend.value) {
       // 提示发送太频繁了
-      
+      frequently.value = '发送太频繁了'
       return
     }
     if (!userInput.value.trim()) return
@@ -311,24 +331,61 @@ const handleEnter = (e) => {
   }
 }
 
+
+// 发送评论
 const sendComment = async () => {
+  if (!userInput.value.trim()) return
+
   canSend.value = false
+
+  const text = userInput.value
+  userInput.value = ''
+
+  const user = JSON.parse(localStorage.getItem('user'))
+
+  const tempComment = {
+    comment_id: '',
+    comment_text: text,
+    username: user.username,
+    user_avatar: user.user_avatar,
+    account_number: user.account_number,
+    comment_time: new Date(),
+    like_number: 0,
+    isLike: false,
+    isExpand: false,
+    showBtn: false,
+    isNew: true
+  }
+
   try {
-    // 回车发送请求
-    await axios.post('/api/comment/addComment', {
-      comment_text: userInput.value,
+    const result = await axios.post('/api/comment/addComment', {
+      comment_text: text,
       character_id: route.query.id
     })
-    userInput.value = ''
+
+    if (result.data.code === 20000) {
+      tempComment.comment_id = result.data.comment_id
+
+      commentRef.value?.addComment(tempComment)
+      commentRef.value?.scrollToBottom()
+    } else {
+      throw new Error('发送失败')
+    }
+  } catch (e) {
+    alert('发送失败')
   } finally {
-    // 冷却时间3秒,在此期间不能发送评论
     setTimeout(() => {
       canSend.value = true
+      frequently.value = ''
     }, 3000)
   }
 }
 
-
+const isLogin = ref(false)
+watch(() => userStore.isLogin, () => {
+  // console.log(userStore.isLogin)
+  isLogin.value = userStore.isLogin
+})
 </script>
 
 <style scoped>
@@ -735,12 +792,36 @@ const sendComment = async () => {
   box-sizing: border-box;
 }
 
+.comment-card-reply-group{
+  display: flex;
+  justify-content: space-between;
+}
+
 .coment-card-reply-textarea {
   width: 100%;
   box-sizing: border-box;
   padding: 0.3rem;
   resize: none;
   font-size: 1rem;
+}
+
+.coment-card-reply-textarea::-webkit-scrollbar {
+  display: none;
+}
+
+.coment-card-reply-textarea-send {
+  background-color: #8b8b8c;
+  height: 1.5rem;
+  width: 3.5rem;
+  border: none;
+  border-radius: 0.2rem;
+  text-align: center;
+  color: #ebebeb;
+  font-size: 0.9rem;
+}
+
+.active {
+  cursor: pointer;
 }
 
 .comment-card-reply-textarea-count {

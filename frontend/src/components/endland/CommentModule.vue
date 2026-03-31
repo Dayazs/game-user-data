@@ -1,5 +1,6 @@
 <template>
-  <div class="comment-card-item" v-for="(item, index) in comment">
+  <div class="comment-card-item" v-for="(item, index) in comment" :key="item.comment_id"
+    :class="{ 'new-comment': item.isNew }">
     <!-- 评论主体 -->
     <div class="comment-card-item-body">
       <!-- 头像 -->
@@ -11,7 +12,8 @@
       <!-- 评论 -->
       <div class="comment-card-item-body-content">
         <!-- 用户名称 -->
-        <div class="comment-card-item-body-username">{{ item.username }} <div class="comment-index">{{index + 1}}</div></div>
+        <div class="comment-card-item-body-username">{{ item.username }} <div class="comment-index"></div>
+        </div>
         <!-- 评论内容 -->
         <div class="comment-card-item-body-text" :class="{ expand: item.isExpand }">{{ item.comment_text }}</div>
       </div>
@@ -22,7 +24,7 @@
     <div class="comment-card-item-buttom">
       <!-- 点赞 -->
       <div class="comment-card-item-buttom-like">
-        <div class="comment-card-item-buttom-like-btn">
+        <div class="comment-card-item-buttom-like-btn" @click="likeComment(item.comment_id)">
           <img :src="item.isLike ? likeOn : likeOff" class="comment-card-item-buttom-like-btn-like" alt="">
           {{ item.like_number }}
         </div>
@@ -49,10 +51,13 @@ import likeOn from '@/assets/img/endland/like_on.svg'
 import likeOff from '@/assets/img/endland/like_off.svg'
 
 import axios from 'axios'
-import { ref, nextTick, onMounted, onBeforeMount, watch } from 'vue'
+import { ref, nextTick, onBeforeMount, watch, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 
 let comment = ref([])
+
+// 登录状态
+const isLogin = ref(false)
 
 // 接收父组件传来的角色id
 const props = defineProps({
@@ -76,11 +81,15 @@ onBeforeMount(async () => {
     }
   })
 
-  const list = result.data.commentArr
+  const list = result.data.commentArr.sort((a, b) => b.like_number - a.like_number)
 
   comment.value = list
   // console.log(result.data.commentArr)
   emit('has-comment', list.length > 0)
+})
+
+onMounted(() => {
+  isLogin.value = userStore.isLogin
 })
 
 // 监听数据变化
@@ -100,7 +109,9 @@ const formDate = (time) => {
   const y = date.getFullYear()
   const m = date.getMonth() + 1
   const d = date.getDate()
-  return `${y}年${m}月${d}日`
+  const h = String(date.getHours()).padStart(2, '0')
+  const min = String(date.getMinutes()).padStart(2, '0')
+  return `${y}年${m}月${d}日 ${h}:${min}`
 }
 
 
@@ -119,12 +130,57 @@ const getComment = async () => {
       character_id: props.character_id
     }
   })
-  let newList = newResult.data.commentArr
+  let newList = newResult.data.commentArr.sort((a, b) => b.like_number - a.like_number)
   comment.value = newList
   emit('has-comment', newList.length > 0)
 }
 
 // 发送评论后先插入到本地
+const addComment = (newComment) => {
+  comment.value.push(newComment)
+  emit('has-comment', true)
+}
+
+const scrollToBottom = async () => {
+  await nextTick()
+
+  const el = document.querySelector('.comment-card-body')
+  if (el) {
+    el.scrollTop = el.scrollHeight
+  }
+}
+
+
+// 暴露添加评论方法
+defineExpose({ addComment, scrollToBottom })
+
+
+watch(
+  () => userStore.isLogin,
+  () => {
+    isLogin.value = userStore.isLogin
+  })
+
+// 点赞评论功能
+const likeComment = async (comment_id) => {
+  // 判断登录状态
+  if (!isLogin.value) return
+
+  const result = await axios.post('/api/comment/likeComment', {
+    comment_id,
+    character_id: props.character_id
+  })
+
+  if (result.data.code === 20000) {
+    const item = comment.value.find(item => item.comment_id === comment_id)
+
+    if (item) {
+      item.isLike = !item.isLike
+      item.like_number += item.isLike ? 1 : -1
+    }
+    console.log(comment)
+  }
+}
 </script>
 
 <style scoped>
@@ -171,7 +227,7 @@ const getComment = async () => {
   /* border-bottom: 0.1rem solid #bfbfbf; */
 }
 
-.comment-index{
+.comment-index {
   margin-right: 0.2rem;
   font-weight: 300;
   font-size: 0.9rem;
@@ -259,5 +315,20 @@ const getComment = async () => {
 
 .comment-card-item-buttom-pulldown-btn-img.overturn {
   transform: rotate(180deg);
+}
+
+/* 高亮评论 */
+.new-comment {
+  animation: highlightFade 1.5s ease;
+}
+
+@keyframes highlightFade {
+  0% {
+    background-color: #e9e9e9;
+  }
+
+  100% {
+    background-color: transparent;
+  }
 }
 </style>

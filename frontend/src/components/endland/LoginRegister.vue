@@ -261,12 +261,17 @@ onMounted(async () => {
         ...userData.data.user.userData
       }
 
+      userStore.isLogin = true
       isAuth.value = true
     } else {
       localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      userStore.isLogin = false
     }
   } catch {
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    userStore.isLogin = false
   } finally {
     isReady.value = true
   }
@@ -298,7 +303,9 @@ async function submit() {
   // 存储token
   localStorage.setItem('token', res.data.token)
 
-  // 对象展开
+  // 切换登录状态
+  userStore.isLogin = true
+
   // 获取用户数据
   const userData = await axios.post('/api/user/userData')
 
@@ -327,6 +334,7 @@ function logout() {
   userStore.triggerRefresh()
 
   resData.value = initUser()
+  userStore.isLogin = false
   isAuth.value = false
 }
 </script>
