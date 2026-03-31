@@ -64,14 +64,17 @@ async function findCharacterIdByComment(user_id, character_id) {
   )
   // console.log(userLikeComments)
   const likeSet = new Set(
-    userLikeComments.map((item) => item.comment_id && item.is_like),
+    // 用户点赞的评论
+    userLikeComments
+      .filter((item) => item.is_like === 1)
+      .map((item) => item.comment_id),
   )
 
   rows.forEach((item) => {
     item.showBtn = false
     item.isExpand = false
 
-    // 是否点赞
+    // 将用户点赞评论和角色评论匹配
     item.isLike = likeSet.has(item.comment_id) || false
   })
   return rows
