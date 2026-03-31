@@ -8,6 +8,7 @@ export const useUserStore = defineStore('user', {
     username: '',
     user_avatar: '',
     needRefreshComment: false,
+    isLogin: false
   }),
 
   actions: {
